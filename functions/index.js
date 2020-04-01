@@ -20,6 +20,18 @@ const app = dialogflow({
     debug: true,
 });
 
+const address = {
+    "Monterrey": "Ave. San Jerónimo 210 Pte. Col. San Jerónimo, Monterrey, N.L. C.P. 64640",
+    "Guadalajara": "Ave. Chapultepec 236, Col. Americana, Guadalajara, Jalisco C.P. 44160",
+    "Ciudad de México": "Matías Romero No. 216, piso 8 y 9, Col. del Valle, Benito Juárez, CDMX C.P. 03100",
+}
+
+const img = {
+    "Monterrey": "https://raw.githubusercontent.com/Leirach/chatobot-marcatel/master/assets/MTY.png",
+    "Guadalajara": "https://raw.githubusercontent.com/Leirach/chatobot-marcatel/master/assets/GDL.png",
+    "Ciudad de México": "https://raw.githubusercontent.com/Leirach/chatobot-marcatel/master/assets/CDMX.png",
+}
+
 app.intent('Default Welcome Intent', (conv) => {
     conv.ask("Hola desde Webhook!");
     conv.ask(new BrowseCarousel({
@@ -47,6 +59,44 @@ app.intent('Default Welcome Intent', (conv) => {
         ],
     }));
 });
+
+app.intent('quienes_somos', (conv) => {
+    conv.ask("Somos una empresa Líder y Socialmente Responsable con presencia en más de 160 países.   \n");
+    conv.ask("¿Te puedo ayudar con algo más?");
+});
+
+// ubicacion -> ubicacion_followup
+// contexto: ubicacion_followup
+app.intent('ubicacion', (conv) => {
+    conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.  \n");
+    conv.ask("¿De cuál sucursal necesitas la dirección?");
+});
+
+// retorna la BasicCard con la direccion de la ciudad,
+// adjunta una imagen del mapa en la carta
+function locationCard(city) {
+    return new BasicCard({
+        title: city,
+        text: address[city],
+        image: new Image({
+            url: img[city],
+            alt: 'Mapa de la dirección.',
+          }),
+    });
+}
+
+//
+app.intent('ubicacion_followup', (conv) => {
+    let parsedCity = conv.parameters.location.city;
+    if (address[parsedCity]){
+        conv.ask(locationCard(parsedCity));
+        conv.ask("¿Te puedo ayudar con algo más?");
+    }
+    else {
+        conv.ask("Oops, no estamos ubicados en esa ciudad")
+    }
+});
+
 
 // The entry point to handle a http request
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
