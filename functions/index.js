@@ -61,8 +61,7 @@ app.intent('Default Welcome Intent', (conv) => {
 });
 
 app.intent('quienes_somos', (conv) => {
-    conv.ask("Somos una empresa Líder y Socialmente Responsable con presencia en más de 160 países.   \n");
-    conv.ask("¿Te puedo ayudar con algo más?");
+    conv.ask("Somos una empresa Líder y Socialmente Responsable con presencia en más de 160 países.  \n¿Te puedo ayudar con algo más?");
 });
 
 // ubicacion -> ubicacion_followup
@@ -87,6 +86,7 @@ function locationCard(city) {
 
 //
 app.intent('ubicacion_followup', (conv) => {
+    conv.ask("Ok. Aquí está la dirección.");
     let parsedCity = conv.parameters.location.city;
     if (address[parsedCity]){
         conv.ask(locationCard(parsedCity));
@@ -97,6 +97,10 @@ app.intent('ubicacion_followup', (conv) => {
     }
 });
 
+app.intent('Default Fallback Intent', (conv) => {
+    conv.ask("¿Podrías repetirlo, por favor?");
+    //conv.contexts.output = conv.contexts.input;
+});
 
 // The entry point to handle a http request
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
