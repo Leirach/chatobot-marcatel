@@ -72,52 +72,50 @@ app.intent('Marcatel.simple.help', (conv) => {
     conv.ask(new Suggestions(ALL_CHIPS));
 });
 
-
-
 app.intent('Marcatel.simple.aboutus', (conv) => {
     conv.ask("Somos una empresa Líder y Socialmente Responsable con presencia en más de 160 países.");
     conv.ask("¿Te puedo ayudar con algo más?");
     conv.ask(new Suggestions(ALL_CHIPS));
-});
-
+})
 // ubicacion -> ubicacion_followup
 // contexto: ubicacion_followup
-app.intent('Marcatel.simple.location', (conv) => {
-    conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.");
-    conv.ask("¿De cuál sucursal necesitas la dirección?");
-    conv.ask(new Suggestions(LOCATION_CHIPS));
-});
-
-
-function locationCard(city) {
-    return new BasicCard({
-        title: city,
-        text: address[city],
-        image: new Image({
-            url: img[city],
-            alt: 'Mapa de la dirección.',
-          }),
+    app.intent('Marcatel.simple.location', (conv) => {
+        conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.");
+        conv.ask("¿De cuál sucursal necesitas la dirección?");
+        conv.ask(new Suggestions(LOCATION_CHIPS));
     });
-}
 
-app.intent('Marcatel.simple.location_followup', (conv) => {
-    let parsedCity = conv.parameters.location.city;
-    if (address[parsedCity]){
-        conv.ask(locationCard(parsedCity));
-        conv.ask("¿Te puedo ayudar con algo más?");
-        conv.ask(new Suggestions(ALL_CHIPS));
 
+    function locationCard(city) {
+        return new BasicCard({
+            title: city,
+            text: address[city],
+            image: new Image({
+                url: img[city],
+                alt: 'Mapa de la dirección.',
+            }),
+        });
     }
-    else {
-        conv.ask("Lo siento, actualmente no estamos ubicados en esta ciudad.")
-        conv.ask("¿Puedo ayudarte en algo más?")
-        conv.ask(new Suggestions(ALL_CHIPS));
-    }
-});
 
-Array.prototype.getRandomVal = function(){
-    return this[Math.floor(Math.random()*this.length)];
-}
+    app.intent('Marcatel.simple.location_followup', (conv) => {
+        conv.ask("Ok. Aquí está la dirección.");
+        let parsedCity = conv.parameters.location.city;
+        if (address[parsedCity]) {
+            conv.ask(locationCard(parsedCity));
+            conv.ask("¿Te puedo ayudar con algo más?");
+            conv.ask(new Suggestions(ALL_CHIPS));
+
+        } else {
+            conv.ask("Lo siento, actualmente no estamos ubicados en esta ciudad.")
+            conv.ask("¿Puedo ayudarte en algo más?")
+            conv.ask(new Suggestions(ALL_CHIPS));
+        }
+    });
+
+    Array.prototype.getRandomVal = function () {
+        return this[Math.floor(Math.random() * this.length)];
+    }
+
 // The entry point to handle a http request
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
+    exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
 // For testing purposes
