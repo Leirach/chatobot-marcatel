@@ -1,3 +1,9 @@
+
+/** ActionsOnGoogle Responses:
+ * https://developers.google.com/assistant/conversational/rich-responses
+ * */
+/** Dialogflow Context Lifespans {@link https://dialogflow.com/docs/contexts#lifespan} */
+
 'use strict';
 const functions = require('firebase-functions');
 const {
@@ -11,7 +17,7 @@ const {
     BrowseCarouselItem
 } = require('actions-on-google');
 
-/** Dialogflow Context Lifespans {@link https://dialogflow.com/docs/contexts#lifespan} */
+
 const Lifespans = {
     DEFAULT: 5,
 };
@@ -32,48 +38,57 @@ const img = {
     "Ciudad de México": "https://raw.githubusercontent.com/Leirach/chatobot-marcatel/master/assets/CDMX.png",
 }
 
+const FALLBACK_RESPONSE = [
+    "Lo siento, no sé cómo ayudarte con ésto.",
+    "Creo que entiendo a qué te refieres.",
+    "Lo siento, actualmente no puedo ayudarte con esto."
+]
+const FEATURES_SAMPLE = [
+    "¿Dónde se encuentran?",//Para ubicación
+    "¿A qué hora abren las oficinas?",//Para Horario
+    "¿Qué es Marcatel?", //Para quienes somos
+    "¿Tienen algun número telefónico?"//Para contacto
+]
+
+const ALL_CHIPS = ["¿Qué puedes hacer?", "Servicios", "Ubicación", "Horarios", "Contacto","Quienes somos"]
+const LOCATION_CHIPS = ["Monterrey", "CDMX","Guadalajara"]
+
+
 app.intent('Default Welcome Intent', (conv) => {
-    conv.ask("Hola desde Webhook!");
-    conv.ask(new BrowseCarousel({
-        items: [
-            new BrowseCarouselItem({
-                title: 'Title of item 1',
-                url: 'https://example.com',
-                description: 'Description of item 1',
-                image: new Image({
-                    url: 'https://storage.googleapis.com/actionsresources/logo_assistant_2x_64dp.png',
-                    alt: 'Image alternate text',
-                }),
-                footer: 'Item 1 footer',
-            }),
-            new BrowseCarouselItem({
-                title: 'Title of item 2',
-                url: 'https://example.com',
-                description: 'Description of item 2',
-                image: new Image({
-                    url: 'https://storage.googleapis.com/actionsresources/logo_assistant_2x_64dp.png',
-                    alt: 'Image alternate text',
-                }),
-                footer: 'Item 2 footer',
-            }),
-        ],
-    }));
+    conv.ask("¡Hola! Soy el asistente de Marcatel y estoy aquí para resolver tus dudas!");
+    conv.ask("¿Cómo te puedo ayudar?");
+    conv.ask(new Suggestions(ALL_CHIPS));
 });
 
-app.intent('quienes_somos', (conv) => {
-    conv.ask("Somos una empresa Líder y Socialmente Responsable con presencia en más de 160 países.   \n");
+app.intent('Default Fallback Intent', (conv) => {
+    conv.ask(FALLBACK_RESPONSE.getRandomVal());
+    conv.ask("¿Puedo ayudarte en algo más?");
+    conv.ask(new Suggestions(ALL_CHIPS));
+});
+
+app.intent('Marcatel.simple.help', (conv) => {
+    conv.ask(`Puedes hacer preguntas como: ${FEATURES_SAMPLE.getRandomVal()}, también puedo brindarte información sobre nuestros servicios y contactarte con un operador de ventas.`);
+    conv.ask("Ahora dime. ¿Cómo te puedo ayudar?");
+    conv.ask(new Suggestions(ALL_CHIPS));
+});
+
+
+
+app.intent('Marcatel.simple.aboutus', (conv) => {
+    conv.ask("Somos una empresa Líder y Socialmente Responsable con presencia en más de 160 países.");
     conv.ask("¿Te puedo ayudar con algo más?");
+    conv.ask(new Suggestions(ALL_CHIPS));
 });
 
 // ubicacion -> ubicacion_followup
 // contexto: ubicacion_followup
-app.intent('ubicacion', (conv) => {
-    conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.  \n");
+app.intent('Marcatel.simple.location', (conv) => {
+    conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.");
     conv.ask("¿De cuál sucursal necesitas la dirección?");
+    conv.ask(new Suggestions(LOCATION_CHIPS));
 });
 
-// retorna la BasicCard con la direccion de la ciudad,
-// adjunta una imagen del mapa en la carta
+
 function locationCard(city) {
     return new BasicCard({
         title: city,
@@ -85,19 +100,24 @@ function locationCard(city) {
     });
 }
 
-//
-app.intent('ubicacion_followup', (conv) => {
+app.intent('Marcatel.simple.location_followup', (conv) => {
     let parsedCity = conv.parameters.location.city;
     if (address[parsedCity]){
         conv.ask(locationCard(parsedCity));
         conv.ask("¿Te puedo ayudar con algo más?");
+        conv.ask(new Suggestions(ALL_CHIPS));
+
     }
     else {
-        conv.ask("Oops, no estamos ubicados en esa ciudad")
+        conv.ask("Lo siento, actualmente no estamos ubicados en esta ciudad.")
+        conv.ask("¿Puedo ayudarte en algo más?")
+        conv.ask(new Suggestions(ALL_CHIPS));
     }
 });
 
-
+Array.prototype.getRandomVal = function(){
+    return this[Math.floor(Math.random()*this.length)];
+}
 // The entry point to handle a http request
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
 // For testing purposes
