@@ -432,7 +432,7 @@ export default {
                     method: "post",
                     url: chatUrl + `/12345678:detectIntent`,
                     headers: {
-                    authorization: "Bearer ya29.c.Ko8Bxgdpq1D5-SsLufU5oodAkqCL-xGCBSxa1SQBaI-F3V47Ys-AOrmFGSxJ_O0aiz_6TkSlpLM2975vIICSVC3JCw8Pvpyln7hfJkiYwQRyopS6L-t9WB37A8WJghyPMr_f0Q2S3f8R2-5vI8Jrb0-4ZySRUNRZnMP7y6ginH-l27XV4uluodNBVLo9m09ynN8"
+                    authorization: "Bearer token"
                     },
                     data: {
                         query_input: {
