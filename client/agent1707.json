@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "marcatel-bot",
+    "private_key_id": "f39830fdc15043acff20edc92b4edc5f434e9336",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCbUMqAqUZw3gST\nABpWoTzc39yyplIU7KZ3s7zC9y+iIuDdnlO5DQ3HSBELgAGyNdjy+xgyW9JMyE59\nb+VHkQe04v9L1sYEtQNdFI4WzJ8B/4ZlabuQ27szuGIGwtGDO0eXFzWIelX7JJEf\nlxupyc+TcIs8wg/KjjIpghb8bjrbKZQclavm/4q4wsw6c8Je8y0XdvKriQu6LXMD\n+9CeM7clWKQLIgCPYQgi0DyyjxU48/BJI48oluRcvxg4cxwb/GiJ8nXIcTVmHTXp\nPnxYgilMROqSN7EdWoQ78V7zaqQiOWmw6jxdyz3TlgIvOF9V2Ggh6MBDTGnBAhOc\nVXgHqSK3AgMBAAECggEACU6U5pMo20WVQkEiKD50OQtvHFjMGAs69HcAS4c9baVS\nZ+VUwK+FZljYBfePN8sd632GwdRvwdXKTPOiFSDzNHCFJNnDYZp+j5rWODaIcWRg\nUikSVMgIq+eTdDKYvxjpHXwwuIjAKJL/Npnlo03VEvw4/mnl7AOLrPdp14mRcaWF\nyedZa0/594ufWqVh355SeOGOut9ouCf3oR8BlHnWGczwElG2l3UWrLSU83jsedbB\nzky3GQJ9dRYBRcnBeDLm0qTVHq7RNqyHmO7TlO/wLCnGs5CJqrjzBNChhmz2hiC/\n5PVYtXBS9CcoB8I4UuyrFBSG6KlL3faQaO9otRXoCQKBgQDKa3+Mf1jsS+S0g/XF\nLMdaG/IW8uJV1oZKbuKd3M+ofFcy0JmaqvABwdEW8oDPMfYYxTKP640/cJmhmNa/\nhuYCzdT/qLTGXAAqWFjHpn1IY7QqX3QdVGbkZ65KUluIhkxLCBBLFrogYT+tXE1+\n1Pe+YtDiUuM6SJJd5Z20iXuP+QKBgQDEbWF6vjRGCoyHUS/k0OZGToLJa08HLxsF\nRF3OJsMStu5wEjT8fBvh1VPpstpKUsnuyI9lqkCvlh+ui673cqI7nDe5tgHHFf6F\nHtBxbU+LBJ7y2Rr/5vwBwVviPy5833mFJwmdqCDJ46sd40CSGIkYV3X506v6fTii\nl5/lW5xULwKBgEn14VLqrQkZ6eTzWnfDFswb7ebotD589fB4d6EKr212kT3l7loP\nH0blFIr37IzISo1ecE0Z2jBV6iybdcvhdGWN48fOUs8vinfuc/HvKVOr6oaY/gpB\nbp8CKzLIyN0nhPTda2akVTnDjsq/MSmokyUjYgNwGcqP/bsFTQxMN7OxAoGADfnW\nYLxdzcn8W7hsFvTCHaiCZ8Bp3BH+8y39GqjpYlB/wJubB4fxF+1szgj6vSUM1x+Q\nDGTDu3qMAIhRx6txXZps4JrRn4+yD1i07g0gBr0qbg8Ce8i8j4dpeTyTmzDvXYj8\nhyoqQxMe3r6Hnp1+S6wVadQkvWrhd7ggGVqeUeMCgYBYHNuP+sb2UI01z19jWkRk\nnwvsNsagmOVwfVRxdGM72LhscW/EeW5h6wwoj9asvKJZEVd7kT52ryaV2P8FStqO\nX39k9qek8dO6L7cPsVVu0WlQ2FnZID0puGZS5+MZm9dhmXFpQ/75otmDlJ12t6Tn\nHARnS0K5sxuVi0lWkaItQg==\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-qc3q9@marcatel-bot.iam.gserviceaccount.com",
+    "client_id": "105432976532091312600",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-qc3q9%40marcatel-bot.iam.gserviceaccount.com"
+  }
+    
