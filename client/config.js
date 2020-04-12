@@ -13,14 +13,15 @@ module.exports = {
     },
     locale: {
         strings: {
-            welcomeTitle: "Chat with me",
-            author: "Aman1707",
-            queryTitle: "Ask me something ...",
-            voiceTitle: "Go ahead, im listening...",
+            welcomeTitle: "Chatea conmigo",
+            author: "Chatbot Marcatel",
+            queryTitle: "Pregunta algo...",
+            voiceTitle: "Adelante, te escucho...",
         },
         settings: {
             speechLang: "es-ES", // <- output language
             recognitionLang: "es-ES" // <- input(recognition) language
         }
-    }
+    },
+    token: ""
 };

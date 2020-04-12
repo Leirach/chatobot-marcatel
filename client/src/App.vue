@@ -20,7 +20,7 @@ export default {
 	components: {
 		appHeader: Header,
 		appChat: Chat
-	}
+	},
 };
 </script>
 

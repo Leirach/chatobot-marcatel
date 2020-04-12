@@ -5,78 +5,61 @@
                 <div class="row">
                     <div class="col-md-12 welcome pb-3">{{greeting}}</div>
                 </div>
-                <div class="row pt-2" v-for="(a,index) in chat" :id="'top'+(a.nid)" :key="index">
+                <div class="row pt-2" v-for="(msg,index) in chat" :id="'top'+(msg.nid)" :key="index">
                     <div class="col-md-12">
                         <!-- Display written query -->
-                        <div class="row" v-if="a.question">
+                        <div class="row" v-if="msg.question">
                             <div class="col mb-2 text-left d-flex justify-content-end">
-                                <div class="question">{{a.question}}</div>
+                                <div class="question">{{msg.question}}</div>
                             </div>
                         </div>
 
                         <!-- Display answers after they are returned by dialogflow -->
-                        <div class="row" v-if="Object.keys(a.answer).length > 1">
+                        <div class="row" v-if="Object.keys(msg.answer).length > 1">
                             <div class="col-md-9 text-left">
                                 <!-- Display all types of answers -->
-                                <div
-                                    class="row pb-2"
-                                    v-for="(res,index) in a.answer.fulfillmentMessages"
-                                    :key="index"
-                                >
-                                    <!-- Display default text message -->
-                                    <div class="col-md-12" v-if="res.message == 'text'">
-                                        <div class="answerText">{{res.text.text[0]}}</div>
-                                    </div>
-
-                                    <!-- Display simple response message -->
-                                    <div class="col-md-12" v-if="res.message == 'simpleResponses'">
-                                        <div
-                                            class="answerText"
-                                        >{{res.simpleResponses.simpleResponses[0].textToSpeech}}</div>
+                                <div class="row pb-2" 
+                                     v-for="(res,index) in msg.answer.items"
+                                     :key="index">
+                                    <!-- Display simple response -->
+                                    <div class="col-md-12" v-if="res.simpleResponse">
+                                        <div class="answerText">{{res.simpleResponse.textToSpeech}}</div>
                                     </div>
 
                                     <!-- Display basic card response -->
-                                    <div class="col-md-12" v-if="res.message == 'basicCard'">
+                                    <div class="col-md-12" v-if="res.basicCard">
                                         <div class="card">
                                             <!-- Display image if present -->
                                             <div class="view overlay" v-if="res.basicCard.image">
-                                                <img
+                                                <img v-if="res.basicCard.image.url"
                                                     class="card-img-top"
-                                                    :src="res.basicCard.image.imageUri"
-                                                    :alt="res.basicCard.image.accessibilityText"
-                                                    v-if="res.basicCard.image.imageUri"
-                                                />
+                                                    :src="res.basicCard.image.url"
+                                                    :alt="res.basicCard.image.accessibilityText">
                                                 <div class="mask rgba-white-slight"></div>
                                             </div>
                                             <div class="card-body">
-                                                <h4
-                                                    class="card-title"
-                                                    v-if="res.basicCard.title"
-                                                >{{res.basicCard.title}}</h4>
-                                                <p
-                                                    class="card-text"
-                                                    v-if="res.basicCard.subtitle"
-                                                >{{res.basicCard.subtitle}}</p>
-                                                <p
-                                                    class="card-text"
-                                                    v-if="res.basicCard.formattedText && res.basicCard.formattedText != res.basicCard.subtitle"
-                                                >{{res.basicCard.formattedText}}</p>
+                                                <h4 v-if="res.basicCard.title"
+                                                    class="card-title">
+                                                    {{res.basicCard.title}}
+                                                </h4>
+                                                <p v-if="res.basicCard.subtitle"
+                                                    class="card-text">
+                                                    {{res.basicCard.subtitle}}
+                                                </p>
+                                                <p class="card-text"
+                                                   v-if="res.basicCard.formattedText">
+                                                   {{res.basicCard.formattedText}}
+                                                </p>
                                                 <!-- Display card buttons -->
-                                                <div
-                                                    v-for="(s,index) in res.basicCard.buttons"
-                                                    :key="index"
-                                                >
+                                                <div v-for="(s,index) in res.basicCard.buttons"
+                                                    :key="index">
                                                     <template v-if="s.openUriAction">
                                                         <div class="suggestions link">
-                                                            <a
-                                                                :href="s.openUriAction.uri"
-                                                                target="_blank"
-                                                            >
+                                                            <a :href="s.openUriAction.uri"
+                                                                target="_blank">
                                                                 {{s.title}}
-                                                                <i
-                                                                    class="fas fa-external-link-alt"
-                                                                    style="margin-left:3px;"
-                                                                ></i>
+                                                                <i class="fas fa-external-link-alt"
+                                                                   style="margin-left:3px;"></i>
                                                             </a>
                                                         </div>
                                                     </template>
@@ -395,7 +378,7 @@
 import uuidv4 from "uuid/v4";
 import axios from "axios";
 import config from "../../config";
-const sessionId = uuidv4();
+// const sessionId = uuidv4(); need an alternative for self inc ids or similar
 const langCode = config.locale.settings.recognitionLang;
 let chatUrl = config.app.dialogflowUrl;
 let agent = config.Dialogflow.agent;
@@ -407,11 +390,14 @@ export default {
             query: "",
             time: "0",
             date: "0",
-            week: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            week: ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"],
             greeting: "",
             id: 1,
-            queryFlag: false
+            queryFlag: false,
+            accessToken: ""
         };
+    },
+    created: function () {
     },
     methods: {
         submit() {
@@ -422,17 +408,17 @@ export default {
                         behavior: "smooth"
                     });
                 }, 2);
-                let temp = {};
-                temp.question = vm.query;
-                temp.nid = vm.id;
-                temp.answer = {};
-                vm.chat.push(temp);
+                let userMsg = {};
+                userMsg.question = vm.query;
+                userMsg.nid = vm.id;
+                userMsg.answer = {};
+                vm.chat.push(userMsg);
                 vm.queryFlag = true;
                 axios({
                     method: "post",
                     url: chatUrl + `/12345678:detectIntent`,
                     headers: {
-                    authorization: "Bearer token"
+                    authorization: `Bearer ${this.accessToken}`
                     },
                     data: {
                         query_input: {
@@ -444,8 +430,8 @@ export default {
                     }
                 }).then(response => {
                     response = response.data;
-                    console.log(response.queryResult.webhookPayload.google.richResponse.items[0].simpleResponse.textToSpeech);
-                    vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse.items;
+                    console.log(response.queryResult.webhookPayload.google.richResponse);
+                    vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
                     vm.scroll();
                     vm.id++;
                     vm.query = "";

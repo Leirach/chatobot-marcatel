@@ -13,7 +13,7 @@ export default {
 		return {
 			welcomeTitle: config.locale.strings.welcomeTitle
 		};
-	}
+	},
 };
 </script>
 
