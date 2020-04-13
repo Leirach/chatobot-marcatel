@@ -1,31 +1,44 @@
-# ChatBot
-A Simple ChatBot Widget
+# vue-dialogflow-v2
 
-![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
-![a](https://forthebadge.com/images/badges/uses-css.svg)
-![a](https://forthebadge.com/images/badges/uses-html.svg)
-![a](https://forthebadge.com/images/badges/uses-js.svg)
-![forthebadge](https://forthebadge.com/images/badges/built-with-swag.svg)
-![forthebadge](https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)
-![forthebadge](https://forthebadge.com/images/badges/kinda-sfw.svg)
-![a](https://forthebadge.com/images/badges/makes-people-smile.svg)
+A dialogflow frontend developed in [vuejs](https://vuejs.org) [CLI 4](https://cli.vuejs.org/).
 
+## Project setup
 
-Check out the [Demo](http://ashwinshenoy.com/chatbot/)
+```
+npm install
+```
 
-Kindly create an api.ai account and train the bot and integrate it in js/script.js file by using api.ai client key.
+### Compiles and hot-reloads for development
 
-Also based on getting the required fields (like name, email) , you can call your json backend to send email/integrate in slack etc.
-Parameter to check if all fields are entered is actionIncomplete.(I have written comments in the JS file)
+```
+npm run serve
+```
 
-You can use webhooks directly from api.ai or call json api from js file based on actionIncomplete parameter = false.
+### Compiles and minifies for production
 
-Also this ChatBot is built in the form of widget, every logic happens in js file including dynamic html content addition.
-You also could put the html content in index.html.
+```
+npm run build
+```
 
-Remember to change the api.ai key in js/script.js file
+### Customize configuration
 
-There can be mistakes in the code :P
+Vue configuration can be edited in **_vue.config.js_**.
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
-Do Let me know your thoughts on this :)
-!
+### Deployment
+
+First run the node server by executing **npm run start** from **chat/** folder.
+
+Then run the build command from the root directory. After running the build command, all the code for deployment will be stored in the chatbot folder - **chatbot**.
+
+Just place the **chatbot** folder in the root of your server and deploy. Path will be - **_www.yourdomain.com_/chatbot/index.html**
+
+### Note
+
+Please make the changes to **config.js** file as required. And also generate a service account key for your dialogflow agent and paste it in **agent1707.json** file.
+
+[Screenshots](sample.png)
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

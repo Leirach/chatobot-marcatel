@@ -1,5 +1,6 @@
 {
   "projects": {
-    "chatbot": "marcatel-bot"
+    "chatbot": "marcatel-bot",
+    "default": "marcatel-bot"
   }
 }
