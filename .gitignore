@@ -64,3 +64,6 @@ node_modules/
 .env
 public/node_modules
 public/marcatel-bot-credentials.js
+
+# Trash Mac files, thank you Steve Jobs
+.DS_Store

@@ -14,7 +14,7 @@ module.exports = {
     locale: {
         strings: {
             welcomeTitle: "Chatea conmigo",
-            author: "Chatbot Marcatel",
+            author: "",
             queryTitle: "Pregunta algo...",
             voiceTitle: "Adelante, te escucho...",
         },

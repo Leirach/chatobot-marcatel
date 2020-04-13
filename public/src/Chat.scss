@@ -1,5 +1,5 @@
-$color-right: #42a5f5;
-$color-left: #0bceaf;
+$color-primary: #42a5f5;
+$color-secondary: #0bceaf;
 $light: #9ed1fa;
 * {
     -webkit-tap-highlight-color: transparent;
@@ -21,7 +21,7 @@ $light: #9ed1fa;
     font-weight: 700;
 }
 .question {
-    background: $color-right;
+    background: $color-primary;
     color: #fff !important;
     border-radius: 20px 20px 3px 20px;
     display: block;
@@ -29,7 +29,7 @@ $light: #9ed1fa;
     width: fit-content;
 }
 .answerText {
-    background: $color-left;
+    background: $color-secondary;
     border-radius: 20px 20px 20px 3px;
     display: block;
     padding: 7px 13px;
@@ -53,36 +53,36 @@ $light: #9ed1fa;
     margin-bottom: 0.5rem;
 }
 .list-group .list-group-item:hover {
-    background: $color-left;
+    background: $color-secondary;
     color: white;
     cursor: pointer !important;
 }
 .suggestions {
-    background: $color-left;
+    background: $color-secondary;
     border-radius: 20px;
     display: block;
     padding: 7px 13px;
     width: fit-content;
     float: left;
-    border: 2px solid $color-left;
+    border: 2px solid $color-secondary;
     cursor: pointer;
     margin: 0px 5px 5px 0px;
     color: white;
 }
 .suggestions:hover {
-    border: 2px solid $color-right;
-    background: $color-right;
+    border: 2px solid $color-primary;
+    background: $color-primary;
 }
 .suggestions.link {
-    background: $color-left;
-    border: 2px solid $color-left;
+    background: $color-secondary;
+    border: 2px solid $color-secondary;
     a {
         color: white;
     }
 }
 .suggestions.link:hover {
-    border: 2px solid $color-right;
-    background: $color-right;
+    border: 2px solid $color-primary;
+    background: $color-primary;
 }
 .loader {
     width: 90px;
@@ -105,7 +105,7 @@ $light: #9ed1fa;
     color: #ff908f;
 }
 .like:hover {
-    color: $color-left;
+    color: $color-secondary;
 }
 .dislike:hover {
     color: #ff2323;
@@ -126,13 +126,19 @@ $light: #9ed1fa;
     }
 }
 .send {
-    width: 100%;
-    margin: 5px;
-    font-size: 34px;
-    color: white;
-    border-radius: 25px;
-    background-color: $color-right;
+    margin: 2px;
+    font-size: 24px;
     cursor: pointer;
+}
+.sendBtn {
+    height: auto;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}
+.send:disabled {
+    background-color: grey;
 }
 .time-date {
     padding: 10px 20px 0px;
@@ -170,13 +176,13 @@ $light: #9ed1fa;
     border-bottom: 2px solid transparent;
 }
 .copyright a:hover {
-    color: $color-right;
-    border-bottom: 2px solid $color-right;
+    color: $color-primary;
+    border-bottom: 2px solid $color-primary;
 }
 .copyright a:focus {
-    color: $color-right;
+    color: $color-primary;
     outline: none;
-    border-bottom: 2px solid $color-right;
+    border-bottom: 2px solid $color-primary;
 }
 
 .scrollbar-chat::-webkit-scrollbar-track {
@@ -198,13 +204,13 @@ $light: #9ed1fa;
     background-image: -webkit-linear-gradient(
         330deg,
         $light 0%,
-        $color-right 50%,
+        $color-primary 50%,
         $light 100%
     );
     background-image: linear-gradient(
         120deg,
         $light 0%,
-        $color-right 50%,
+        $color-primary 50%,
         $light 100%
     );
 }
