@@ -1,12 +1,5 @@
+process.env.VUE_APP_VERSION = require('./package.json').version
+
 module.exports = {
-    productionSourceMap: false,
-    publicPath: '/chatbot',
-    outputDir: 'chatbot',
-    pwa: {
-        workboxOptions: {
-            skipWaiting: true
-        },
-        name: 'Dialogflow Agent',
-        themeColor: '#42a5f5'
-    }
+    // config
 }

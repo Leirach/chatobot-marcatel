@@ -394,7 +394,7 @@ export default {
             greeting: "",
             id: 1,
             queryFlag: false,
-            accessToken: "ya29.c.Ko8BxgdxJlZDA3SsPjEucugxZNPhk7g_FscPFhqjqTO_svRvtzXE1AG3Z7pA_25qrR4Iw4FIJPORquZrnQpnJiKFV1RqUQePMD0LDKPARlK7I57t3SomNE0cXJqzdKAL9RwyxWywuU80mgJkIkkFIPDzkBA0w3GdJx1a-xOE5ixgBWCP3Rvv3Y-kBZTCTp2aACI"
+            accessToken: "ya29.c.Ko8BxgfskgRlAUe8WkjM2ZPCdeJkTsJgmH9N7Sw9HSThHKiI1tLZT2nkqIF-01LptYQ65WgKQCF2oaTWCC9SDzUh0pYQh1xTSjsT31DNs1AjVVuCj60g2l2yJRagn4SF6NUqXD5d3xXAKfTrnxQ8FcOKSRGqKZnI8-iANEfCdY8QCx5kOzchS0xQGZbT4j13QPw"
         };
     },
     created: function () {
