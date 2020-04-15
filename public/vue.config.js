@@ -4,7 +4,6 @@ module.exports = {
     // config
     productionSourceMap: false,
     publicPath: '/',
-    outputDir: 'chatbot',
     pwa: {
         workboxOptions: {
             skipWaiting: true
