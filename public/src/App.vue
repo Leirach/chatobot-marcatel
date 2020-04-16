@@ -16,17 +16,17 @@
 <script>
 import Header from "./views/Header";
 import Chat from "./views/Chat";
-import gtoken from "./credentials/gcloud_credentials";
+import main from "./credentials/gcloud_credentials";
+
 export default {
 	components: {
 		appHeader: Header,
 		appChat: Chat
 	},
-	data: {
-		a: 1
-	},
-	created: function () {
-		gtoken.getToken()
+	mounted: function () {
+		console.log("getTokenAsync")
+		main().catch(console.error);
+
 	}
 };
 </script>
