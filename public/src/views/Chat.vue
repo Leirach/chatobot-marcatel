@@ -115,7 +115,7 @@
                                     </a>
                                 </p>
                                 <!-- dejamos esto? -->
-                                <p class="copyright-version">Basado en version 1.0 por 
+                                <p class="copyright-version">Basado en version 1.0 por
                                     <a href="https://amangarg.firebaseapp.com"
                                        target="_blank">Aman1707</a>
                                     <br/>
@@ -134,8 +134,8 @@
                     id="queryinput" autofocus/>
             </div>
             <div class="col-md-2 col-sm-2 col-2 text-center">
-                <button type="button" @click="submit" :disabled="query == ''" 
-                        class="sendBtn btn btn-primary"> 
+                <button type="button" @click="submit" :disabled="query == ''"
+                        class="sendBtn btn btn-primary">
                     <i class="send fas fa-arrow-right"></i>
                 </button>
             </div>
@@ -151,12 +151,15 @@ import config from "../../config";
 import BasicCard from "./BasicCard";
 import ListSelect from "./ListSelect";
 import CarouselSelect from "./CarouselSelect";
+import key from '../credentials/marcatel-bot.json';
+const { GoogleToken } = require('gtoken');
 
 // const sessionId = uuidv4(); need an alternative for self inc ids or similar
 const langCode = config.locale.settings.recognitionLang;
 let chatUrl = config.app.dialogflowUrl;
 let agent = config.Dialogflow.agent;
 export default {
+
     components: {
         chatBasicCard: BasicCard,
         chatListSelect: ListSelect,
@@ -177,6 +180,24 @@ export default {
         };
     },
     created: function () {
+        const gtoken = new GoogleToken({
+            email: key.client_email,
+            key: key.private_key,
+            scope: [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow",
+            ]
+        });
+
+
+        gtoken.getToken((err, token) => {
+            if (err) {
+                console.log("ERROR")
+                console.log(err);
+                return;
+            }
+            this.accessToken = token.access_token
+        });
     },
     methods: {
         submit() {
