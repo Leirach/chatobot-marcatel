@@ -147,6 +147,7 @@
 import uuidv4 from "uuid/v4";
 import axios from "axios";
 import config from "../../config";
+import { getToken } from "../credentials/gcloud_credentials";
 //Chat components
 import BasicCard from "./BasicCard";
 import ListSelect from "./ListSelect";
@@ -180,23 +181,13 @@ export default {
         };
     },
     created: function () {
-        const gtoken = new GoogleToken({
-            email: key.client_email,
-            key: key.private_key,
-            scope: [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/dialogflow",
-            ]
-        });
-
-
-        gtoken.getToken((err, token) => {
+        getToken((err, token) => {
             if (err) {
-                console.log("ERROR")
+                console.log("ERROR: ");
                 console.log(err);
-                return;
+                return ;
             }
-            this.accessToken = token.access_token
+            this.accessToken = token.access_token;
         });
     },
     methods: {
