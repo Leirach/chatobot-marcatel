@@ -17,7 +17,7 @@
 import Header from "./views/Header";
 import Chat from "./views/Chat";
 
-import key from './credentials/marcatel-bot-029633e6e46c.json';
+import key from './credentials/marcatel-bot.json';
 const { GoogleToken } = require('gtoken');
 export default {
 	components: {
