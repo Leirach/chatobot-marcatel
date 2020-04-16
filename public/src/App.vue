@@ -16,17 +16,34 @@
 <script>
 import Header from "./views/Header";
 import Chat from "./views/Chat";
-import gtoken from "./credentials/gcloud_credentials";
+import key from './credentials/marcatel-bot-029633e6e46c.json';
+const { GoogleToken } = require('gtoken');
 export default {
 	components: {
 		appHeader: Header,
 		appChat: Chat
 	},
-	data: {
-		a: 1
-	},
 	created: function () {
-		gtoken.getToken()
+		console.log(key);
+		const gtoken = new GoogleToken({
+			email: key.client_email,
+			key: key.private_key,
+			scope: [
+				"https://www.googleapis.com/auth/cloud-platform",
+				"https://www.googleapis.com/auth/dialogflow",
+			]
+		});
+
+
+		gtoken.getToken((err, token) => {
+			if (err) {
+				console.log("ERROR")
+				console.log(err);
+				return;
+			}
+			console.log(token.access_token);
+		});
+
 	}
 };
 </script>
