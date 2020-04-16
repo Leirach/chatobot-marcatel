@@ -67,6 +67,11 @@ function getAuthenticatedClient() {
 
 exports.main = async function(){
     const oAuth2Client = await getAuthenticatedClient();
+    const url = 'https://people.googleapis.com/v1/people/me?personFields=names';
+    const res = await oAuth2Client.request({url});
+
+    // After acquiring an access_token, you may want to check on the audience, expiration,
+    // or original scopes requested.  You can do that with the `getTokenInfo` method.
     const tokenInfo = await oAuth2Client.getTokenInfo(
         oAuth2Client.credentials.access_token
     );
