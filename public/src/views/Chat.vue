@@ -1,12 +1,12 @@
 <template>
-    <div class="container">
+    <main>
         <div class="row text-center">
-            <div class="col-md-12 chat-window scrollbar scrollbar-chat">
+            <div class="col-12 chat-window scrollbar scrollbar-chat">
                 <div class="row">
-                    <div class="col-md-12 welcome pb-3">{{greeting}}</div>
+                    <div class="col-12 welcome pb-3">{{greeting}}</div>
                 </div>
                 <div class="row pt-2" v-for="(msg,index) in chat" :id="'top'+(msg.nid)" :key="index">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <!-- Display written query -->
                         <div class="row" v-if="msg.question">
                             <div class="col mb-2 text-left d-flex justify-content-end">
@@ -16,36 +16,36 @@
 
                         <!-- Display answers after they are returned by dialogflow -->
                         <div class="row" v-if="Object.keys(msg.answer).length > 1">
-                            <div class="col-md-9 text-left">
+                            <div class="col-9 text-left">
                                 <!-- Display all types of answers -->
                                 <div class="row pb-2"
                                      v-for="(res,index) in msg.answer.items"
                                      :key="index">
                                     <!-- Display simple response -->
-                                    <div class="col-md-12" v-if="res.simpleResponse">
+                                    <div class="col-12" v-if="res.simpleResponse">
                                         <div class="answerText">{{res.simpleResponse.textToSpeech}}</div>
                                     </div>
 
                                     <!-- Display basic card response -->
-                                    <div class="col-md-12" v-if="res.basicCard">
+                                    <div class="col-12" v-if="res.basicCard">
                                         <chat-basic-card v-bind:basicCard="res.basicCard">
                                         </chat-basic-card>
                                     </div>
 
                                     <!-- Display Select List response -->
-                                    <div class="col-md-12" v-if="res.listSelect">
+                                    <div class="col-12" v-if="res.listSelect">
                                         <chat-list-select v-bind:listSelect="res.listSelect">
                                         </chat-list-select>
                                     </div>
 
                                     <!-- Display Carousel card response -->
-                                    <div class="col-md-12" v-if="res.carouselSelect">
+                                    <div class="col-12" v-if="res.carouselSelect">
                                         <chat-carousel-select v-bind:carouselSelect="res.carouselSelect">
                                         </chat-carousel-select>
                                     </div>
 
                                     <!-- Display image only -->
-                                    <div class="col-md-12" v-if="res.image">
+                                    <div class="col-12" v-if="res.image">
                                         <div class="card">
                                             <!-- Display image if present -->
                                             <div class="view overlay" v-if="res.image.imageUri">
@@ -59,7 +59,7 @@
                                     </div>
 
                                     <!-- Display Link Out Suggestion chip -->
-                                    <div class="col-md-12"
+                                    <div class="col-12"
                                         v-if="res.message == 'linkOutSuggestion'">
                                         <div class="suggestions link">
                                             <div v-if="res.linkOutSuggestion">
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                                 <!-- Display Suggestion chip -->
-                                <div class="col-md-12" v-if="msg.answer.suggestions">
+                                <div class="col-12" v-if="msg.answer.suggestions">
                                     <div v-for="(s,index) in msg.answer.suggestions"
                                         :key="index"
                                         class="suggestions"
@@ -99,19 +99,19 @@
                 </div>
                 <div id="bottom"></div>
                 <div class="row">
-                    <div class="col-md-12 time-date">
+                    <div class="col-12 time-date">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <p class="time">
                                     {{ time }}
                                     <br />
                                 </p>
                                 <p class="date">{{ date }}</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <p class="copyright">
                                     <a class="copyright" href="https://www.marcatel.com/"
-                                       target="_blank">Link a otra cosa Marcatel o algo
+                                       target="_blank">Link temporal a Marcatel 
                                     </a>
                                 </p>
                                 <!-- dejamos esto? -->
@@ -128,19 +128,19 @@
         </div>
 
         <div class="row">
-            <div class="col-md-10 col-sm-10 col-10 search">
+            <div class="col-9 search">
                 <input type="text" :placeholder="config.locale.strings.queryTitle"
                     v-model="query" @keyup.enter="submit" :disabled="!!queryFlag"
                     id="queryinput" autofocus/>
             </div>
-            <div class="col-md-2 col-sm-2 col-2 text-center">
+            <div class="col-3 text-center">
                 <button type="button" @click="submit" :disabled="query == ''"
-                        class="sendBtn btn btn-primary">
+                        class="sendBtn btn">
                     <i class="send fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
-    </div>
+    </main>
 </template>
 
 <script>
@@ -295,7 +295,7 @@ export default {
         let time = new Date().getHours();
         if (time < 12 && time >= 0) {
             vm.greeting = "Buenos Días";
-        } else if (time >= 16) {
+        } else if (time >= 19) {
             vm.greeting = "Buenas Noches";
         } else if (time >= 12) {
             vm.greeting = "Buenas Tardes";

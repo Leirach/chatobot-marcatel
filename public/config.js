@@ -13,7 +13,7 @@ module.exports = {
     },
     locale: {
         strings: {
-            welcomeTitle: "Chatea conmigo",
+            welcomeTitle: "Asistente Marcatel",
             author: "",
             queryTitle: "Pregunta algo...",
             voiceTitle: "Adelante, te escucho...",

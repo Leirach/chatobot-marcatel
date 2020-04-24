@@ -1,9 +1,10 @@
-$color-primary: #42a5f5;
-$color-secondary: #0bceaf;
-$light: #9ed1fa;
+$color-primary: #FDD403;
+$color-secondary: #000;
+$light: #ffeb85;
 * {
     -webkit-tap-highlight-color: transparent;
 }
+// Chat window
 .chat-window {
     overflow: auto;
     height: calc(100vh - 115px);
@@ -12,14 +13,8 @@ $light: #9ed1fa;
     padding: 10px 15px;
     color: #505050;
 }
-.welcome {
-    font-size: 25px;
-    font-weight: 700;
-}
-.weather-title {
-    font-size: 18px;
-    font-weight: 700;
-}
+
+// Chat bubbles
 .question {
     background: $color-primary;
     color: #fff !important;
@@ -36,6 +31,8 @@ $light: #9ed1fa;
     width: fit-content;
     color: white;
 }
+
+// Chat rich messages
 .card {
     border-radius: 10px;
 }
@@ -57,6 +54,7 @@ $light: #9ed1fa;
     color: white;
     cursor: pointer !important;
 }
+
 .suggestions {
     background: $color-secondary;
     border-radius: 20px;
@@ -88,6 +86,8 @@ $light: #9ed1fa;
     width: 90px;
     margin: 0px 10px 10px;
 }
+
+//Probably unused
 .like-dislike {
     position: absolute;
     bottom: 0;
@@ -110,6 +110,8 @@ $light: #9ed1fa;
 .dislike:hover {
     color: #ff2323;
 }
+
+// Bottom bar
 .search {
     padding: 10px 20px;
     width: 100%;
@@ -136,10 +138,14 @@ $light: #9ed1fa;
     margin: auto;
     padding: 10px;
     text-align: center;
+    background-color: $color-secondary !important;
+    color: $color-primary !important;
 }
 .send:disabled {
     background-color: grey;
 }
+
+// Extra text
 .time-date {
     padding: 10px 20px 0px;
     width: 100%;
@@ -185,6 +191,7 @@ $light: #9ed1fa;
     border-bottom: 2px solid $color-primary;
 }
 
+// Scrollbar
 .scrollbar-chat::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
@@ -213,4 +220,21 @@ $light: #9ed1fa;
         $color-primary 50%,
         $light 100%
     );
+}
+
+// Header.vue
+.welcome {
+    font-size: 25px;
+    font-weight: 700;
+}
+.weather-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+.heading {
+	font-size: 30px;
+	font-weight: 700;
+	letter-spacing: 1px;
+	color:$color-secondary;
+	background-color: $color-primary;
 }

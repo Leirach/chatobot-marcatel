@@ -1,31 +1,36 @@
 <template>
 	<div id="app" class="container-fluid">
-		<div class="row justify-content-center main">
-			<div class="col-md-8 no-padding">
-				<div
-					class="bg"
-					:style="{'background-image': 'url(' + require('./assets/chatBackground.svg') + ')'}"
-				></div>
-				<app-header></app-header>
+		<div class="justify-content-center main">
+				<div :style="{'background-image': 'url(' + require('./assets/chatBackground.svg') + ')'}"
+					class="bg">
+				</div>
+				<div class="row text-center heading">
+					<div class="col heading">{{welcomeTitle}}</div>
+				</div>
 				<app-chat></app-chat>
-			</div>
+
 		</div>
 	</div>
 </template>
 
 <script>
-import Header from "./views/Header";
 import Chat from "./views/Chat";
+import config from "../config";
 
 export default {
 	components: {
-		appHeader: Header,
 		appChat: Chat
-	}
+	},
+	data() {
+		return {
+			welcomeTitle: config.locale.strings.welcomeTitle
+		};
+	},
 };
 </script>
 
 <style lang="scss">
+@import "Chat.scss";
 .main {
 	position: relative;
 	z-index: 1;
