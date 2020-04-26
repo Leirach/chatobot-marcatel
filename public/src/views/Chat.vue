@@ -60,13 +60,12 @@
 
                                     <!-- Display Link Out Suggestion chip -->
                                     <div class="col-12"
-                                        v-if="res.message == 'linkOutSuggestion'">
+                                        v-if="res.message === 'linkOutSuggestion'">
                                         <div class="suggestions link">
                                             <div v-if="res.linkOutSuggestion">
                                                 <a
                                                     :href="res.linkOutSuggestion.uri"
-                                                    target="_blank"
-                                                >
+                                                    target="_blank">
                                                     {{res.linkOutSuggestion.destinationName}}
                                                     <i
                                                         class="fas fa-external-link-alt"
@@ -78,14 +77,16 @@
                                     </div>
                                 </div>
                                 <!-- Display Suggestion chip -->
-                                <div class="col-12" v-if="msg.answer.suggestions">
-                                    <div v-for="(s,index) in msg.answer.suggestions"
-                                        :key="index"
-                                        class="suggestions"
-                                        @click="clickSubmit(s.title)">
+                                <template class="col-12" v-if="msg.answer.suggestions">
+                                    <v-chip
+                                            v-for="(s,index) in msg.answer.suggestions"
+                                            :key="index"
+                                            color="primary"
+                                            outlined
+                                            @click="clickSubmit(s.title)">
                                         <div v-if="s.title">{{s.title}}</div>
-                                    </div>
-                                </div>
+                                    </v-chip>
+                                </template>
                             </div>
                         </div>
                         <div class="row" v-else>
@@ -111,7 +112,7 @@
                             <div class="col-6">
                                 <p class="copyright">
                                     <a class="copyright" href="https://www.marcatel.com/"
-                                       target="_blank">Link temporal a Marcatel 
+                                       target="_blank">Link temporal a Marcatel
                                     </a>
                                 </p>
                                 <!-- dejamos esto? -->
