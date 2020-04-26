@@ -1,5 +1,6 @@
 $color-primary: #FDD403;
-$color-secondary: #000;
+$primary: #FDD403;
+$color-secondary: #272727;
 $light: #ffeb85;
 * {
     -webkit-tap-highlight-color: transparent;
@@ -11,12 +12,16 @@ $light: #ffeb85;
     // border: 1px solid;
     // border-color: #cccccc;
     padding: 10px 15px;
-    color: #505050;
+    color: #272727;
+}
+.privacy{
+    text-align: right;
+    size: 12px;
 }
 
 // Chat bubbles
 .question {
-    background: $color-primary;
+    background: $color-secondary;
     color: #fff !important;
     border-radius: 20px 20px 3px 20px;
     display: block;
@@ -24,12 +29,12 @@ $light: #ffeb85;
     width: fit-content;
 }
 .answerText {
-    background: $color-secondary;
+    background: #E0E0E0;
     border-radius: 20px 20px 20px 3px;
     display: block;
     padding: 7px 13px;
     width: fit-content;
-    color: white;
+    color: $color-secondary;
 }
 
 // Chat rich messages
@@ -142,7 +147,7 @@ $light: #ffeb85;
     color: $color-primary !important;
 }
 .send:disabled {
-    background-color: grey;
+    background-color: $light;
 }
 
 // Extra text

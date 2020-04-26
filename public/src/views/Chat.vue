@@ -1,10 +1,10 @@
 <template>
-    <main>
+    <v-container fluid>
         <div class="row text-center">
             <div class="col-12 chat-window scrollbar scrollbar-chat">
-                <div class="row">
+                <!--div class="row">
                     <div class="col-12 welcome pb-3">{{greeting}}</div>
-                </div>
+                </div-->
                 <div class="row pt-2" v-for="(msg,index) in chat" :id="'top'+(msg.nid)" :key="index">
                     <div class="col-12">
                         <!-- Display written query -->
@@ -78,7 +78,7 @@
                                 </div>
                                 <!-- Display Suggestion chip -->
                                 <template class="col-12" v-if="msg.answer.suggestions">
-                                    <v-chip
+                                    <v-chip style="margin-top: 4px; margin-right: 2px;"
                                             v-for="(s,index) in msg.answer.suggestions"
                                             :key="index"
                                             color="primary"
@@ -110,17 +110,9 @@
                                 <p class="date">{{ date }}</p>
                             </div>
                             <div class="col-6">
-                                <p class="copyright">
-                                    <a class="copyright" href="https://www.marcatel.com/"
-                                       target="_blank">Link temporal a Marcatel
-                                    </a>
-                                </p>
-                                <!-- dejamos esto? -->
-                                <p class="copyright-version">Basado en version 1.0 por
-                                    <a href="https://amangarg.firebaseapp.com"
-                                       target="_blank">Aman1707</a>
-                                    <br/>
-                                </p>
+                            <!--a class="copyright privacy" href="https://www.marcatel.com/aviso-de-privacidad-integral"
+                               target="_blank">Aviso de Privacidad
+                            </a-->
                             </div>
                         </div>
                     </div>
@@ -134,18 +126,28 @@
                     v-model="query" @keyup.enter="submit" :disabled="!!queryFlag"
                     id="queryinput" autofocus/>
             </div>
-            <div class="col-3 text-center">
-                <button type="button" @click="submit" :disabled="query == ''"
-                        class="sendBtn btn">
-                    <i class="send fas fa-arrow-right"></i>
-                </button>
+            <div class="col-3">
+                <v-fab-transition >
+                <v-btn style="margin: 0px"
+                        v-show="!hidden"
+                        color="#FDD403"
+                        absolute
+
+                        right
+                        fab
+                        @click="submit"
+                        :disabled="query == ''">
+                    <v-icon>mdi-send</v-icon>
+                </v-btn>
+                </v-fab-transition>
+
             </div>
         </div>
-    </main>
+    </v-container>
 </template>
 
 <script>
-import uuidv4 from "uuid/v4";
+    import uuidv4 from "uuid/v4";
 import axios from "axios";
 import config from "../../config";
 import { getToken } from "../credentials/gcloud_credentials";
@@ -256,27 +258,28 @@ export default {
             }, 2);
         },
         updateTime() {
-            let cd = new Date();
-            let hrs = cd.getHours();
+            let today = new Date();
+            let hrs = today.getHours();
             let ampm = hrs >= 12 ? "PM" : "AM";
             hrs = hrs % 12;
             hrs = hrs ? hrs : 12;
             this.time =
                 this.zeroPadding(hrs, 2) +
                 ":" +
-                this.zeroPadding(cd.getMinutes(), 2) +
+                this.zeroPadding(today.getMinutes(), 2) +
                 ":" +
-                this.zeroPadding(cd.getSeconds(), 2) +
+                this.zeroPadding(today.getSeconds(), 2) +
                 " " +
                 ampm;
             this.date =
-                this.zeroPadding(cd.getFullYear(), 4) +
-                "-" +
-                this.zeroPadding(cd.getMonth() + 1, 2) +
-                "-" +
-                this.zeroPadding(cd.getDate(), 2) +
+                this.week[today.getDay()] +
                 " " +
-                this.week[cd.getDay()];
+                this.zeroPadding(today.getDate(), 2) +
+                "/" +
+                this.zeroPadding(today.getMonth() + 1, 2) +
+                "/" +
+                this.zeroPadding(today.getFullYear(), 4)
+
         },
         zeroPadding(num, digit) {
             let zero = "";
