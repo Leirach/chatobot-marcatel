@@ -80,7 +80,6 @@
                                 <template class="col-12" v-if="msg.answer.suggestions">
                                     <v-chip style="margin-top: 4px; margin-right: 2px;"
                                             v-for="(s,index) in msg.answer.suggestions"
-                                            :key="index"
                                             color="primary"
                                             outlined
                                             @click="clickSubmit(s.title)">
@@ -129,7 +128,6 @@
             <div class="col-3">
                 <v-fab-transition >
                 <v-btn style="margin: 0px"
-                        v-show="!hidden"
                         color="#FDD403"
                         absolute
 
@@ -205,7 +203,7 @@ export default {
                 let userMsg = {};
                 userMsg.question = vm.query;
                 userMsg.nid = vm.id;
-                userMsg.answer = {};
+                    userMsg.answer = {};
                 vm.chat.push(userMsg);
                 vm.queryFlag = true;
                 axios({
@@ -224,8 +222,10 @@ export default {
                     }
                 }).then(response => {
                     response = response.data;
-                    console.log(response.queryResult.webhookPayload.google.richResponse);
+                    console.log(response.queryResult.webhookPayload.google);
                     vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
+                   //response.queryResult.webhookPayload.google.systemIntent.data.carouselSelect.items;
+                    //Carousel not working
                     vm.scroll();
                     vm.id++;
                     vm.query = "";
