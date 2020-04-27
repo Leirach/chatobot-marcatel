@@ -224,8 +224,9 @@ export default {
                     response = response.data;
                     console.log(response.queryResult.webhookPayload.google);
                     vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
-                   //response.queryResult.webhookPayload.google.systemIntent.data.carouselSelect.items;
-                    //Carousel not working
+                    console.log(response);
+                    //response.queryResult.webhookPayload.google.systemIntent.data.carouselSelect.items;
+                    //Carousel not working kyc alv
                     vm.scroll();
                     vm.id++;
                     vm.query = "";
