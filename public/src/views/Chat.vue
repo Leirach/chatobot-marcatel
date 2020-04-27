@@ -16,7 +16,7 @@
 
                         <!-- Display answers after they are returned by dialogflow -->
                         <div class="row" v-if="Object.keys(msg.answer).length > 1">
-                            <div class="col-9 text-left">
+                            <div class="col-11 text-left">
                                 <!-- Display all types of answers -->
                                 <div class="row pb-2"
                                      v-for="(res,index) in msg.answer.items"
@@ -39,8 +39,8 @@
                                     </div>
 
                                     <!-- Display Carousel card response -->
-                                    <div class="col-12" v-if="res.carouselSelect">
-                                        <chat-carousel-select v-bind:carouselSelect="res.carouselSelect">
+                                    <div class="col-12" v-if="msg.carousel">
+                                        <chat-carousel-select v-if="msg.carousel" v-on:carouselSumit="clickSubmit" v-bind:carouselSelect="msg.carousel">
                                         </chat-carousel-select>
                                     </div>
 
@@ -203,7 +203,8 @@ export default {
                 let userMsg = {};
                 userMsg.question = vm.query;
                 userMsg.nid = vm.id;
-                    userMsg.answer = {};
+                userMsg.answer = {};
+                userMsg.carousel =  "",
                 vm.chat.push(userMsg);
                 vm.queryFlag = true;
                 axios({
@@ -222,10 +223,11 @@ export default {
                     }
                 }).then(response => {
                     response = response.data;
-                    console.log(response.queryResult.webhookPayload.google);
+                    //console.log(response.queryResult.webhookPayload.google);
                     vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
-                    console.log(response.queryResult.webhookPayload.google.richResponse.basicCard);
-                    //response.queryResult.webhookPayload.google.systemIntent.data.carouselSelect.items;
+                    //console.log( response.queryResult.webhookPayload.google.richResponse);
+                    vm.chat[vm.id - 1].carousel = response.queryResult.webhookPayload.google.systemIntent.data.carouselSelect.items
+                    //console.log(userMsg.carousel)
                     //Carousel not working kyc alv
                     vm.scroll();
                     vm.id++;
@@ -242,7 +244,8 @@ export default {
                 });
             }
         },
-        clickSubmit(keyword) {
+        clickSubmit : function (keyword) {
+
             let vm = this;
             vm.query = keyword;
             vm.submit();

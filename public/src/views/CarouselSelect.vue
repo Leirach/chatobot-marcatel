@@ -1,46 +1,44 @@
 <template>
-    <div id="carousel-cards" class="carousel slide carousel-fade"
-         data-ride="carousel">
-        <ol class="carousel-indicators">
-            <template v-for="s in carouselSelect.items">
-                <li data-target="#carousel-cards" :data-slide-to="s.info.key"
-                    :class="{ active: s.info.key == 1 }" :key="s.info.key">
-                </li>
-            </template>
-        </ol>
+    <div id="carousel-cards" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
-            <template v-for="s in carouselSelect.items">
-                <div class="carousel-item" :class="{ active: s.info.key == 1 }"
-                     :key="s.info.key">
-                    <div class="view">
-                        <img class="d-block w-100" :src="s.image.imageUri"/>
-                        <div class="mask rgba-black-light"></div>
-                    </div>
-                    <div class="carousel-caption">
-                        <h3 class="h3-responsive" v-if="s.title">
-                            {{s.title}}
-                        </h3>
-                        <p v-if="s.description">{{s.description}}</p>
-                    </div>
-                </div>
+            <template v-for="card in carouselSelect">
+                    <v-card
+                            class="ma-4"
+                            max-width="344"
+                            outlined
+                            @click="carouselSumit(card.optionInfo.key)"
+                    >
+                        <v-list-item three-line>
+                            <v-list-item-content>
+                                <v-list-item-title class="headline mb-1" v-if="card.title">{{card.title}}</v-list-item-title>
+                                <v-list-item-subtitle  v-if="card.description">{{card.description}}</v-list-item-subtitle>
+                            </v-list-item-content>
+
+                            <v-list-item-avatar
+                                    tile
+                                    size="80"
+                                    color="grey"
+                            >
+                                <v-img v-if="card.image"
+                                       :src="card.image.url"
+                                       :alt="card.image.accessibilityText"
+                                       height="120px"/>
+                            </v-list-item-avatar>
+                        </v-list-item>
+                    </v-card>
             </template>
         </div>
-        <a class="carousel-control-prev" href="#carousel-cards" role="button"
-           data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carousel-cards" role="button"
-           data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
 </template>
 
 <script>
 export default {
     props: ['carouselSelect'],
+    methods:{
+        carouselSumit : function(keyword){
+            this.$emit('carouselSumit',keyword);
+        },
+    }
 };
 </script>
 

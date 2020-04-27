@@ -14,7 +14,6 @@
         </v-card-subtitle>
         <v-card-actions>
 
-
             <div v-for="(s,index) in basicCard.buttons" :key="index">
                 <v-btn rounded dark
                        @click="clickSubmit(s.title)"
@@ -35,6 +34,7 @@
     export default {
         props: ['basicCard'],
     };
+
 </script>
 
 <style lang="scss" scoped>
