@@ -39,6 +39,12 @@ const img = {
     "Guadalajara": "https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/GDL.png?alt=media&token=531104f5-a15e-4120-8b16-20772949aaca",
     "Ciudad de México": "https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/CDMX.png?alt=media&token=e7590bc6-cf3b-4e05-83ea-6527747f4623",
 }
+
+const address_url = {
+    "Monterrey": "https://goo.gl/maps/ithzts7q1tPfJvfX9",
+    "Guadalajara": "https://goo.gl/maps/f844J47yCCKzzP6E7",
+    "Ciudad de México": "https://goo.gl/maps/HBwK8uN26Nb9xrZq9",
+}
 const FALLBACK_RESPONSE = [
     "Lo siento, no sé cómo ayudarte con ésto.",
     "Creo que entiendo a qué te refieres.",
@@ -61,6 +67,10 @@ function locationCard(city) {
         image: new Image({
             url: img[city],
             alt: 'Mapa de la dirección.',
+        }),
+        buttons: new Button({
+            title: 'Ir a Maps',
+            url: address_url[city],
         }),
     });
 }
