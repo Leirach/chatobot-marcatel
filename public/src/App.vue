@@ -4,11 +4,21 @@
 				color="primary"
 				absolute
 				dense
-				dark><v-toolbar-title>Asistente Marcatel</v-toolbar-title>
+				dark>
+			<v-toolbar-title>Asistente Marcatel</v-toolbar-title>
+			<div class="col-6 text-right">
+				<p class="time text-right">
+					{{ time }}
+					<br />
+				</p>
+				<p class="date text-right">{{ date }}</p>
+			</div>
+
 		</v-app-bar>
 		<v-flex>
 			<app-chat></app-chat>
 		</v-flex>
+
 	</v-container>
 </template>
 
@@ -21,9 +31,65 @@
 		},
 		data() {
 			return {
-				welcomeTitle: config.locale.strings.welcomeTitle
+				welcomeTitle: config.locale.strings.welcomeTitle,
+				time: "0",
+				date: "0",
+				week: ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"],
+				greeting: "",
 			};
 		},
+		methods:{
+			updateTime() {
+				let today = new Date();
+				let hrs = today.getHours();
+				let ampm = hrs >= 12 ? "PM" : "AM";
+				hrs = hrs % 12;
+				hrs = hrs ? hrs : 12;
+				this.time =
+						this.zeroPadding(hrs, 2) +
+						":" +
+						this.zeroPadding(today.getMinutes(), 2) +
+						":" +
+						this.zeroPadding(today.getSeconds(), 2) +
+						" " +
+						ampm;
+				this.date =
+						this.week[today.getDay()] +
+						" " +
+						this.zeroPadding(today.getDate(), 2) +
+						"/" +
+						this.zeroPadding(today.getMonth() + 1, 2) +
+						"/" +
+						this.zeroPadding(today.getFullYear(), 4)
+
+			},
+			zeroPadding(num, digit) {
+				let zero = "";
+				for (let i = 0; i < digit; i++) {
+					zero += "0";
+				}
+				return (zero + num).slice(-digit);
+			}
+		},
+		mounted() {
+			let vm = this;
+			vm.updateTime();
+			setInterval(() => {
+				vm.updateTime();
+			}, 1000);
+
+			let time = new Date().getHours();
+			if (time < 12 && time >= 0) {
+				vm.greeting = "Buenos Días";
+			} else if (time >= 19) {
+				vm.greeting = "Buenas Noches";
+			} else if (time >= 12) {
+				vm.greeting = "Buenas Tardes";
+			} else {
+				vm.greeting = "Hola!";
+			}
+
+		}
 	};
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <div class="row text-center">
-            <div class="col-12 chat-window scrollbar scrollbar-chat">
+            <div class="col-12 chat-window ">
                 <!--div class="row">
                     <div class="col-12 welcome pb-3">{{greeting}}</div>
                 </div-->
@@ -97,25 +97,6 @@
                         </div>
                     </div>
                 </div>
-                <div id="bottom"></div>
-                <div class="row">
-                    <div class="col-12 time-date">
-                        <div class="row">
-                            <div class="col-6">
-                                <p class="time">
-                                    {{ time }}
-                                    <br />
-                                </p>
-                                <p class="date">{{ date }}</p>
-                            </div>
-                            <div class="col-6">
-                            <!--a class="copyright privacy" href="https://www.marcatel.com/aviso-de-privacidad-integral"
-                               target="_blank">Aviso de Privacidad
-                            </a-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -172,10 +153,6 @@ export default {
             config,
             chat: [],
             query: "",
-            time: "0",
-            date: "0",
-            week: ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"],
-            greeting: "",
             id: 1,
             queryFlag: false,
             accessToken: ""
@@ -261,30 +238,6 @@ export default {
                 });
             }, 2);
         },
-        updateTime() {
-            let today = new Date();
-            let hrs = today.getHours();
-            let ampm = hrs >= 12 ? "PM" : "AM";
-            hrs = hrs % 12;
-            hrs = hrs ? hrs : 12;
-            this.time =
-                this.zeroPadding(hrs, 2) +
-                ":" +
-                this.zeroPadding(today.getMinutes(), 2) +
-                ":" +
-                this.zeroPadding(today.getSeconds(), 2) +
-                " " +
-                ampm;
-            this.date =
-                this.week[today.getDay()] +
-                " " +
-                this.zeroPadding(today.getDate(), 2) +
-                "/" +
-                this.zeroPadding(today.getMonth() + 1, 2) +
-                "/" +
-                this.zeroPadding(today.getFullYear(), 4)
-
-        },
         zeroPadding(num, digit) {
             let zero = "";
             for (let i = 0; i < digit; i++) {
@@ -293,25 +246,7 @@ export default {
             return (zero + num).slice(-digit);
         }
     },
-    mounted() {
-        let vm = this;
-        vm.updateTime();
-        setInterval(() => {
-            vm.updateTime();
-        }, 1000);
 
-        let time = new Date().getHours();
-        if (time < 12 && time >= 0) {
-            vm.greeting = "Buenos Días";
-        } else if (time >= 19) {
-            vm.greeting = "Buenas Noches";
-        } else if (time >= 12) {
-            vm.greeting = "Buenas Tardes";
-        } else {
-            vm.greeting = "Hola!";
-        }
-
-    }
 };
 </script>
 
