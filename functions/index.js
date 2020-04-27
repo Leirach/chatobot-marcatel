@@ -35,9 +35,9 @@ const address = {
     "Ciudad de México": "Matías Romero No. 216, piso 8 y 9, Col. del Valle, Benito Juárez, CDMX C.P. 03100",
 }
 const img = {
-    "Monterrey": "https://raw.githubusercontent.com/Leirach/chatobot-marcatel/master/assets/MTY.png",
-    "Guadalajara": "https://raw.githubusercontent.com/Leirach/chatobot-marcatel/master/assets/GDL.png",
-    "Ciudad de México": "https://raw.githubusercontent.com/Leirach/chatobot-marcatel/master/assets/CDMX.png",
+    "Monterrey": "https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/MTY.png?alt=media&token=0b893a58-a552-48da-95a9-cb911ccbd0ba",
+    "Guadalajara": "https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/GDL.png?alt=media&token=531104f5-a15e-4120-8b16-20772949aaca",
+    "Ciudad de México": "https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/CDMX.png?alt=media&token=e7590bc6-cf3b-4e05-83ea-6527747f4623",
 }
 const FALLBACK_RESPONSE = [
     "Lo siento, no sé cómo ayudarte con ésto.",
@@ -91,7 +91,7 @@ app.intent('Marcatel.simple.aboutus', (conv) => {
 
 app.intent('Marcatel.simple.location_followup', (conv) => {
     conv.ask("Ok. Aquí está la dirección.");
-    let parsedCity = conv.parameters.location.city;
+    let parsedCity = conv.parameters.sucursales;
     if (address[parsedCity]) {
         conv.ask(locationCard(parsedCity));
         conv.ask("¿Te puedo ayudar con algo más?");
