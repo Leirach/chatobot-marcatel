@@ -1,11 +1,10 @@
 <template >
 	<v-container fluid style="adding:0px; margin-right: 0px; margin-left: 0px;">
 		<v-app-bar
-				color="primary"
+				color="#FDD403"
 				absolute
-				dense
-				dark>
-			<v-toolbar-title>Asistente Marcatel</v-toolbar-title>
+				dense>
+			<v-toolbar-title style="font-weight: normal">Asistente Marcatel</v-toolbar-title>
 			<div class="col-6 text-right">
 				<p class="time text-right">
 					{{ time }}
