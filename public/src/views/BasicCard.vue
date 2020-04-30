@@ -1,11 +1,9 @@
 <template>
-    <v-card
-            outlined
-            max-width="344">
+    <v-card outlined max-width="500">
         <v-img v-if="basicCard.image"
                :src="basicCard.image.url"
                :alt="basicCard.image.accessibilityText"
-                height="200px"/>
+                height="auto"/>
         <v-card-title v-if="basicCard.title">
            {{basicCard.title}}
         </v-card-title>
@@ -16,7 +14,6 @@
 
             <div v-for="(s,index) in basicCard.buttons" :key="index">
                 <v-btn rounded dark
-                       @click="clickSubmit(s.title)"
                        v-if="s.title"
                        :href="s.openUrlAction.url"
                        target="_blank">

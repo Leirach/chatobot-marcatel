@@ -151,23 +151,6 @@ $light: #ffeb85;
 }
 
 // Extra text
-.time-date {
-    padding: 10px 20px 0px;
-    width: 100%;
-}
-.time {
-    font-weight: 600;
-    text-align: left;
-    font-size: small;
-    margin: unset;
-}
-.date {
-    font-weight: 400;
-    text-align: left;
-    font-size: small;
-    margin: unset;
-    font-size: 11px;
-}
 .copyright {
     font-weight: 600;
     text-align: right;
@@ -242,4 +225,21 @@ $light: #ffeb85;
 	letter-spacing: 1px;
 	color:$color-secondary;
 	background-color: $color-primary;
+}
+.time-date {
+    padding: 10px 20px 0px;
+    width: 100%;
+}
+.time {
+    font-weight: 600;
+    text-align: left;
+    font-size: small;
+    margin: unset;
+}
+.date {
+    font-weight: 500;
+    text-align: left;
+    font-size: small;
+    margin: unset;
+    font-size: 11px;
 }

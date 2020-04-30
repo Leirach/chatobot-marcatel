@@ -5,11 +5,8 @@
 				absolute
 				dense>
 			<v-toolbar-title style="font-weight: normal">Asistente Marcatel</v-toolbar-title>
-			<div class="col-6 text-right">
-				<p class="time text-right">
-					{{ time }}
-					<br />
-				</p>
+			<div class="ml-auto">
+				<p class="time text-right">{{ time }}</p>
 				<p class="date text-right">{{ date }}</p>
 			</div>
 
@@ -24,6 +21,7 @@
 <script>
 	import config from "../config";
 	import Chat from "./views/Chat";
+	import moment from 'moment';
 	export default {
 		components: {
 			appChat: Chat
@@ -41,26 +39,8 @@
 			updateTime() {
 				let today = new Date();
 				let hrs = today.getHours();
-				let ampm = hrs >= 12 ? "PM" : "AM";
-				hrs = hrs % 12;
-				hrs = hrs ? hrs : 12;
-				this.time =
-						this.zeroPadding(hrs, 2) +
-						":" +
-						this.zeroPadding(today.getMinutes(), 2) +
-						":" +
-						this.zeroPadding(today.getSeconds(), 2) +
-						" " +
-						ampm;
-				this.date =
-						this.week[today.getDay()] +
-						" " +
-						this.zeroPadding(today.getDate(), 2) +
-						"/" +
-						this.zeroPadding(today.getMonth() + 1, 2) +
-						"/" +
-						this.zeroPadding(today.getFullYear(), 4)
-
+				this.time = moment().format('h:mm a');
+				this.date = moment().format('ddd L');
 			},
 			zeroPadding(num, digit) {
 				let zero = "";
@@ -72,6 +52,7 @@
 		},
 		mounted() {
 			let vm = this;
+			moment.locale('Es');
 			vm.updateTime();
 			setInterval(() => {
 				vm.updateTime();

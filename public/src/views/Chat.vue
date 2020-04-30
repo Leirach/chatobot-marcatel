@@ -39,8 +39,8 @@
 
 
                                     <!-- Display Carousel card response -->
-                                    <div class="col-12" v-if="msg.carousel">
-                                        <chat-carousel-select v-if="msg.carousel" v-on:carouselSumit="clickSubmit" v-bind:carouselSelect="msg.carousel">
+                                    <div class="col-12" v-if="res.carouselBrowse">
+                                        <chat-carousel-select v-on:carouselSumit="clickSubmit" v-bind:carouselSelect="res.carouselBrowse.items">
                                         </chat-carousel-select>
                                     </div>
 
@@ -82,8 +82,7 @@
                                 <template class="col-12" v-if="msg.answer.suggestions">
                                     <v-chip style="margin-top: 4px; margin-right: 2px;"
                                             v-for="s in msg.answer.suggestions"
-                                            color="primary"
-                                            outlined
+                                            color="primary" outlined
                                             @click="clickSubmit(s.title)">
                                         <div v-if="s.title">{{s.title}}</div>
                                     </v-chip>
@@ -103,26 +102,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-9 search">
+            <div class="search">
                 <input type="text" :placeholder="config.locale.strings.queryTitle"
                        v-model="query" @keyup.enter="submit" :disabled="!!queryFlag"
                        id="queryinput" autofocus/>
             </div>
-            <div class="col-3">
                 <v-fab-transition >
-                    <v-btn style="margin: 0px"
-                           color="#FDD403"
-                           absolute
-
-                           right
-                           fab
-                           @click="submit"
-                           :disabled="query == ''">
+                    <v-btn style="margin: 0px" color="#FDD403" absolute
+                           right fab @click="submit" :disabled="query == ''">
                         <v-icon>mdi-send</v-icon>
                     </v-btn>
                 </v-fab-transition>
-
-            </div>
+            
         </div>
     </v-container>
 </template>
@@ -207,7 +198,7 @@
                         console.log(response.queryResult.webhookPayload.google);
                         //console.log(response.queryResult.webhookPayload.google);
                         vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
-                        //console.log( response.queryResult.webhookPayload.google.richResponse);
+                        console.log( response.queryResult.webhookPayload.google.richResponse);
                         //vm.chat[vm.id - 1].carousel = response.queryResult.webhookPayload.google.systemIntent.data.carouselSelect.items
                         //console.log(userMsg.carousel)
                         vm.scroll();
@@ -241,53 +232,9 @@
                     });
                 }, 2);
             },
-            updateTime() {
-                let today = new Date();
-                let hrs = today.getHours();
-                let ampm = hrs >= 12 ? "PM" : "AM";
-                hrs = hrs % 12;
-                hrs = hrs ? hrs : 12;
-                this.time =
-                    this.zeroPadding(hrs, 2) +
-                    ":" +
-                    this.zeroPadding(today.getMinutes(), 2) +
-                    ":" +
-                    this.zeroPadding(today.getSeconds(), 2) +
-                    " " +
-                    ampm;
-                this.date =
-                    this.week[today.getDay()] +
-                    " " +
-                    this.zeroPadding(today.getDate(), 2) +
-                    "/" +
-                    this.zeroPadding(today.getMonth() + 1, 2) +
-                    "/" +
-                    this.zeroPadding(today.getFullYear(), 4)
-            },
-            zeroPadding(num, digit) {
-                let zero = "";
-                for (let i = 0; i < digit; i++) {
-                    zero += "0";
-                }
-                return (zero + num).slice(-digit);
-            }
         },
         mounted() {
-            let vm = this;
-            vm.updateTime();
-            setInterval(() => {
-                vm.updateTime();
-            }, 1000);
-            let time = new Date().getHours();
-            if (time < 12 && time >= 0) {
-                vm.greeting = "Buenos Días";
-            } else if (time >= 19) {
-                vm.greeting = "Buenas Noches";
-            } else if (time >= 12) {
-                vm.greeting = "Buenas Tardes";
-            } else {
-                vm.greeting = "Hola!";
-            }
+
         }
     };
 </script>

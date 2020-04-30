@@ -12,6 +12,8 @@ const {
     Button,
     Image,
     SimpleResponse,
+    BrowseCarousel,
+    BrowseCarouselItem,
     Carousel,
     CarouselItem
 } = require('actions-on-google');
@@ -24,6 +26,8 @@ const app = dialogflow({
     debug: true,
 });
 
+// Para que tenemos 3 de estos si dicen lo mismo????questionmark??
+// @valentin
 const working_hours = {
     "Monterrey": "Trabajamos de Lunes a Viernes desde las 09:00 hasta las 18:30",
     "Guadalajara": "Trabajamos de Lunes a Viernes desde las 09:00 hasta las 18:30",
@@ -46,9 +50,10 @@ const address_url = {
     "Ciudad de México": "https://goo.gl/maps/HBwK8uN26Nb9xrZq9",
 }
 const FALLBACK_RESPONSE = [
-    "Lo siento, no sé cómo ayudarte con ésto.",
-    "Creo que entiendo a qué te refieres.",
-    "Lo siento, actualmente no puedo ayudarte con esto."
+    "Lo siento, no sé cómo ayudarte con eso.",
+    "Creo que no entiendo a qué te refieres.",
+    "Lo siento, actualmente no puedo ayudarte con eso.",
+    "Oops, no entiendo a qué te refieres.",
 ]
 const FEATURES_SAMPLE = [
     "¿Dónde se encuentran?",//Para ubicación
@@ -63,7 +68,7 @@ const SERVICE_CHIPS = ["Conectividad", "Telefonía","Cloud", "Servicios Administ
 function locationCard(city) {
     return new BasicCard({
         title: city,
-        text: address[city],
+        subtitle: address[city],
         image: new Image({
             url: img[city],
             alt: 'Mapa de la dirección.',
@@ -83,46 +88,47 @@ app.intent('Default Welcome Intent', (conv) => {
 
 app.intent('Default Fallback Intent', (conv) => {
     conv.ask(FALLBACK_RESPONSE.getRandomVal());
-    conv.ask("¿Puedo ayudarte en algo más?");
+    conv.ask("Puedes intentar con las siguientes opciones por ejemplo:");
     conv.ask(new Suggestions(ALL_CHIPS));
 });
 
 app.intent('Marcatel.simple.help', (conv) => {
     conv.ask(`Puedes hacer preguntas como: ${FEATURES_SAMPLE.getRandomVal()}, también puedo brindarte información sobre nuestros servicios y contactarte con un operador de ventas.`);
-    conv.ask("Ahora dime. ¿Cómo te puedo ayudar?");
+    conv.ask("¿Cómo te puedo ayudar?");
     conv.ask(new Suggestions(ALL_CHIPS));
 });
 
 app.intent('Marcatel.simple.aboutus', (conv) => {
     conv.ask("Somos una empresa Líder y Socialmente Responsable con presencia en más de 160 países.");
     conv.ask("¿Te puedo ayudar con algo más?");
-    conv.ask(new Suggestions(ALL_CHIPS));
+    //conv.ask(new Suggestions(ALL_CHIPS));
 })
 
 app.intent('Marcatel.simple.location_followup', (conv) => {
-    conv.ask("Ok. Aquí está la dirección.");
+    conv.ask("Aquí tienes la dirección.");
     let parsedCity = conv.parameters.sucursales;
     if (address[parsedCity]) {
         conv.ask(locationCard(parsedCity));
         conv.ask("¿Te puedo ayudar con algo más?");
-        conv.ask(new Suggestions(ALL_CHIPS));
+        //conv.ask(new Suggestions(ALL_CHIPS));
     } else {
         conv.ask("Lo siento, actualmente no estamos ubicados en esta ciudad.")
         conv.ask("¿Puedo ayudarte en algo más?")
-        conv.ask(new Suggestions(ALL_CHIPS));
+        //conv.ask(new Suggestions(ALL_CHIPS));
     }
 });
 
 app.intent('Marcatel.simple.location', (conv) => {
     conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.");
-    conv.ask("¿De cuál sucursal necesitas la dirección?");
+    conv.ask("¿De cuál sucursal te interesa la ubicación?");
     conv.ask(new Suggestions(LOCATION_CHIPS));
 });
 
+// Igual para que esto si los 3 son lo mismo? o aun no esta definido
 app.intent('Marcatel.simple.working_hours', (conv) => {
     let parsedCity = conv.parameters.sucursales;
     conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.");
-    conv.ask("¿De cuál sucursal te interesa saber?");
+    conv.ask("¿De cuál sucursal te interesa el horario?");
     conv.ask(new Suggestions(LOCATION_CHIPS));
 });
 
@@ -131,11 +137,11 @@ app.intent('Marcatel.simple.working_hours_followup', (conv) => {
     if (working_hours[parsedCity]) {
         conv.ask(working_hours[parsedCity]);
         conv.ask("¿Te puedo ayudar con algo más?");
-        conv.ask(new Suggestions(ALL_CHIPS));
+        //conv.ask(new Suggestions(ALL_CHIPS));
     } else {
         conv.ask("Lo siento, actualmente no estamos ubicados en esta ciudad.")
         conv.ask("¿Puedo ayudarte en algo más?")
-        conv.ask(new Suggestions(ALL_CHIPS));
+        //conv.ask(new Suggestions(ALL_CHIPS));
     }
 });
 
@@ -143,11 +149,10 @@ app.intent('Marcatel.dynamic.services', (conv) => {
 
     conv.ask('Contamos con 4 servicios principales: Conectividad, Telefonia, Cloud y Servicios Administrados');
     conv.ask("¿Sobre qué servicio te gustaría información?");
-    conv.ask(new Carousel({
-        title: 'Servicios Marcatel',
-        items: {
-            // Add the first item to the carousel
-            'Conectividad': {
+    conv.ask(new BrowseCarousel({
+        items: [
+            //Add the first item to the carousel
+            /*'Conectividad': {
                 synonyms: [
                     'conectividad',
                     'opcion  1',
@@ -158,16 +163,17 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                     'internet',
                     'opción 2',
                     'conexion'
-                ],
+                ], */
+            new BrowseCarouselItem({
                 title: 'Conectividad',
                 description: 'Proveemos conexiones virtuales, tales como E-Access, E-Lan, E-Line y Internet Dedicado',
                 image: new Image({
                     url: 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FCONECTIVIDAD.png?alt=media&token=eaa63ac2-5f79-41e5-9257-61aebbb0e311',
                     alt: 'Imagen de Conectividad',
                 }),
-            },
+            }),
             // Add the second item to the carousel
-            'Telefonia': {
+            /*'Telefonia': {
                 synonyms: [
                     'Telefonia',
                     'Telefonía',
@@ -175,7 +181,8 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                     'la segunda',
                     'videoconferencia',
                     'vpn'
-                ],
+                ],*/
+            new BrowseCarouselItem({
                 title: 'Telefonía',
                 description: 'Te ofrecemos servicios como: Servicio Troncal SIP, Troncales Digitales, DID\'S, ' +
                     'Videoconferencia, VPN y Terminación WS',
@@ -183,9 +190,9 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                     url: 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FTELEFONIA.png?alt=media&token=d7fa2a05-4f96-4fb0-ba63-db5829bd5e59',
                     alt: 'Imagen de Telefonia',
                 }),
-            },
+            }),
             // Add the third item to the carousel
-            'Cloud': {
+            /*'Cloud': {
                 synonyms: [
                     'cloud',
                     'nube',
@@ -196,7 +203,8 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                     'Storage',
                     'TI'
 
-                ],
+                ], */
+            new BrowseCarouselItem({
                 title: 'Cloud',
                 description: 'Conjunto de servicios como : Media Cloud, Storage, Cloud PBX, Virtual Machines, ' +
                     'CCaaS y Servicios TI.',
@@ -204,21 +212,22 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                     url: 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FCLOUD.png?alt=media&token=83b67ca0-80a6-4790-a306-0c39ceb8c324',
                     alt: 'Imagen Cloud',
                 }),
-            },
-            'Administrados': {
+            }),
+            /*'Administrados': {
                 synonyms: [
                     'Google Pixel XL',
                     'Pixel',
                     'Pixel XL',
-                ],
+                ],*/
+            new BrowseCarouselItem({
                 title: 'Servicios Administrados',
                 description: 'Proveemos servicios de: Firewall, Conmutador SIP y Router.',
                 image: new Image({
                     url: 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FADMINISTRADOS.png?alt=media&token=b468fc38-d47e-4f01-a21b-e4f7003c13ed',
                     alt: 'Imagen Servicios Administrados',
                 }),
-            },
-        },
+            }),
+        ],
     }));
     conv.ask(new Suggestions(SERVICE_CHIPS));
 
