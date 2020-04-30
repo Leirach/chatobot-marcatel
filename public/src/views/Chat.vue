@@ -1,10 +1,8 @@
 <template>
-    <v-container fluid>
+    <div fluid>
         <div class="row text-center">
             <div class="col-12 chat-window">
-                <!--div class="row">
-                    <div class="col-12 welcome pb-3">{{greeting}}</div>
-                </div-->
+                <div class="col-12"></div> 
                 <div class="row pt-2" v-for="msg in chat" :id="'top'+(msg.nid)">
                     <div class="col-12">
                         <!-- Display written query -->
@@ -100,22 +98,23 @@
                 </div>
                 <div id="bottom"></div>
             </div>
-        </div>
+        </div >
         <div class="row">
-            <div class="search">
-                <input type="text" :placeholder="config.locale.strings.queryTitle"
-                       v-model="query" @keyup.enter="submit" :disabled="!!queryFlag"
-                       id="queryinput" autofocus/>
+            <div class="message-row">
+                <v-text-field solo type="text" :placeholder="config.locale.strings.queryTitle"
+                            v-model="query" @keyup.enter="submit" class="message-area"
+                            :disabled="!!queryFlag" id="queryinput" height="60px" 
+                            hide-details autofocus>
+                </v-text-field>
             </div>
-                <v-fab-transition >
-                    <v-btn style="margin: 0px" color="#FDD403" absolute
-                           right fab @click="submit" :disabled="query == ''">
-                        <v-icon>mdi-send</v-icon>
-                    </v-btn>
-                </v-fab-transition>
-            
+            <v-fab-transition>
+                <v-btn style="margin-top: 0px" color="#FDD403" absolute
+                        right fab @click="submit" :disabled="query == ''">
+                    <v-icon>mdi-send</v-icon>
+                </v-btn>
+            </v-fab-transition> 
         </div>
-    </v-container>
+    </div>
 </template>
 
 <script>

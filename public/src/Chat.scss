@@ -8,7 +8,7 @@ $light: #ffeb85;
 // Chat window
 .chat-window {
     overflow: auto;
-    height: calc(100vh - 115px);
+    height: calc(100vh - 128px);
     // border: 1px solid;
     // border-color: #cccccc;
     padding: 10px 15px;
@@ -117,21 +117,22 @@ $light: #ffeb85;
 }
 
 // Bottom bar
-.search {
-    padding: 10px 20px;
-    width: 100%;
-    background-color: white;
+.message-row {
+    width: calc(100vw - 90px);
+    margin: 0px 20px;
+}
+
+.message-area {
     input {
-        width: 100%;
         border-style: none !important;
         outline: none !important;
         font-size: 20px;
-        padding: 5px 0px;
     }
     input:disabled {
         background-color: white;
     }
 }
+
 .send {
     margin: 2px;
     font-size: 24px;

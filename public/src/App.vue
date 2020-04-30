@@ -1,8 +1,7 @@
 <template >
-	<v-container fluid style="adding:0px; margin-right: 0px; margin-left: 0px;">
+	<v-container fluid style="padding:0px; margin-right: 0px; margin-left: 0px; margin-bottom: 10px">
 		<v-app-bar
 				color="#FDD403"
-				absolute
 				dense>
 			<v-toolbar-title style="font-weight: normal">Asistente Marcatel</v-toolbar-title>
 			<div class="ml-auto">
