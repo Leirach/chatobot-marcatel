@@ -16,11 +16,14 @@
                         <div class="row" v-if="Object.keys(msg.answer).length > 1">
                             <div class="col-9 text-left">
                                 <!-- Display all types of answers -->
-                                <div class="row pb-2"
-                                     v-for="res in msg.answer.items">
+                                <div class="row pb-2" v-for="res in msg.answer.items">
                                     <!-- Display simple response -->
                                     <div class="col-12" v-if="res.simpleResponse">
                                         <div class="answerText">{{res.simpleResponse.textToSpeech}}</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <chat-fill-form></chat-fill-form>
                                     </div>
 
                                     <!-- Display basic card response -->
@@ -126,6 +129,7 @@
     import BasicCard from "./BasicCard";
     import ListSelect from "./ListSelect";
     import CarouselSelect from "./CarouselSelect";
+    import FillForm from "./FillForm";
     import key from '../credentials/marcatel-bot.json';
     const { GoogleToken } = require('gtoken');
     // const sessionId = uuidv4(); need an alternative for self inc ids or similar
@@ -136,16 +140,14 @@
         components: {
             chatBasicCard: BasicCard,
             chatListSelect: ListSelect,
-            chatCarouselSelect: CarouselSelect
+            chatCarouselSelect: CarouselSelect,
+            chatFillForm: FillForm
         },
         data() {
             return {
                 config,
                 chat: [],
                 query: "",
-                time: "0",
-                date: "0",
-                week: ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"],
                 greeting: "",
                 id: 1,
                 queryFlag: false,

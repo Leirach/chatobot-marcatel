@@ -244,3 +244,28 @@ $light: #ffeb85;
     margin: unset;
     font-size: 11px;
 }
+
+//fillform
+.contact-form {
+    padding: 20px;
+    width: auto;
+}
+
+div > label {
+    left: 0px !important;
+    right: auto !important;
+}
+
+.error--text, .v-messages__message {
+    color: #FF5252 !important;
+}
+
+.submit-button:enabled {
+    background-color: $primary !important;
+}
+
+.no-padding {
+    margin: 0px;
+    padding: 0px !important;
+    align-self: flex-end;
+}
