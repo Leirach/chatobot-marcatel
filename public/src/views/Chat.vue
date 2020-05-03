@@ -2,7 +2,7 @@
     <div fluid>
         <div class="row text-center">
             <div class="col-12 chat-window">
-                <div class="col-12"></div> 
+                <div class="col-12"></div>
                 <div class="row pt-2" v-for="msg in chat" :id="'top'+(msg.nid)">
                     <div class="col-12">
                         <!-- Display written query -->
@@ -106,7 +106,7 @@
             <div class="message-row">
                 <v-text-field solo type="text" :placeholder="config.locale.strings.queryTitle"
                             v-model="query" @keyup.enter="submit" class="message-area"
-                            :disabled="!!queryFlag" id="queryinput" height="60px" 
+                            :disabled="!!queryFlag" id="queryinput" height="60px"
                             hide-details autofocus>
                 </v-text-field>
             </div>
@@ -115,7 +115,7 @@
                         right fab @click="submit" :disabled="query == ''">
                     <v-icon>mdi-send</v-icon>
                 </v-btn>
-            </v-fab-transition> 
+            </v-fab-transition>
         </div>
     </div>
 </template>
