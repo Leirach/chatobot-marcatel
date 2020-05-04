@@ -13,6 +13,8 @@ const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse, BrowseCarousel, BrowseCarouselItem,} = require('actions-on-google');
 const {locationCard} = require('./constants/objects.js');
 const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./constants/array.js');
+const sgMail = require('@sendgrid/mail');
+
 let db = admin.firestore();
 
 const Lifespans = {
@@ -23,6 +25,12 @@ db.settings({timestampsInSnapshots: true});
 const app = dialogflow({
     debug: false,
 });
+
+const API_KEY = functions.config().sendgrid.key;
+const TEMPLATE_ID = functions.config().sendgrid.template;
+sgMail.setApiKey(API_KEY);
+
+
 
 app.intent('Default Welcome Intent', (conv) => {
     conv.ask("¡Hola! Soy tu asistente de Marcatel y estoy aquí para resolver tus dudas!");
@@ -215,4 +223,25 @@ Array.prototype.getRandomVal = function () {
 
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
+exports.genericEmail = functions.https.onCall(async (data, context) => {
+    if(!context.data.email){
+        throw new functions.https.HttpsError('failed-precondition', 'Must have a valid email');
+    }
+
+    const msg ={
+        to: context.data.email,
+        from: 'hello@marcatel.com',
+        templateId: TEMPLATE_ID,
+        dynamic_template_data: {
+            subject: data.subject,
+            name: data.text,
+        },
+    };
+
+    await sgMail.send(msg);
+
+    // response must be JSON serializable
+    return { success: true };
+});
+
 
