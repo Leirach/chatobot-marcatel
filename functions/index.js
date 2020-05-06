@@ -10,7 +10,8 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
 const functions = require('firebase-functions');
-const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse, BrowseCarousel, BrowseCarouselItem,} = require('actions-on-google');
+const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse, 
+    BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
 const {locationCard} = require('./constants/objects.js');
 const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./constants/array.js');
 const sgMail = require('@sendgrid/mail');
@@ -54,7 +55,28 @@ app.intent('Marcatel.simple.aboutus', (conv) => {
     conv.ask("Somos una empresa Líder y Socialmente Responsable con presencia en más de 160 países.");
     conv.ask("¿Te puedo ayudar con algo más?");
     conv.ask(new Suggestions(ALL_CHIPS));
-})
+});
+
+app.intent('Marcatel.simple.contact', (conv) => {
+    conv.ask("¿Eres cliente marcatel actualmente?");
+});
+
+app.intent('Marcatel.simple.contact_Cliente', (conv) => {
+    conv.ask("¿Cuál es tu nombre?");
+});
+
+app.intent('Marcatel.simple.contact_Nombre', (conv) => {
+    conv.ask("Por favor, dame un email donde podamos contactarte.");
+});
+
+app.intent('Marcatel.simple.contact_Email', (conv) => {
+    conv.ask("Por último, necesito un número de telefono.");
+});
+
+app.intent('Marcatel.simple.contact_Numero', (conv) => {
+    conv.ask("Muy bien, ya sería todo. Pronto te pondremos en contacto con un representante Marcatel.");
+    conv.ask("¿Puedo ayudarte con otra cosa?");
+});
 
 app.intent('Marcatel.simple.location_followup', (conv) => {
     conv.ask("Aquí tienes la dirección.");
