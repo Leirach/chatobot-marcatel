@@ -13,7 +13,7 @@
                         </div>
 
                         <!-- Display answers after they are returned by dialogflow -->
-                        <div class="row" v-if="Object.keys(msg.answer).length > 1">
+                        <div class="row" v-if="Object.keys(msg.answer).length >= 1">
                             <div class="col-9 text-left">
                                 <!-- Display all types of answers -->
                                 <div class="row pb-2" v-for="res in msg.answer.items">
@@ -196,6 +196,7 @@
                         }
                     }).then(response => {
                         response = response.data;
+                        console.log(response);
                         vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
                         vm.scroll();
                         vm.id++;
