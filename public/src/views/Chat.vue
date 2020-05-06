@@ -21,10 +21,13 @@
                                     <div class="col-12" v-if="res.simpleResponse">
                                         <div class="answerText">{{res.simpleResponse.textToSpeech}}</div>
                                     </div>
-
+                                    <!-- FILL FORM PARA ENVIAR AL CHAT 
+                                         falta algo como v-if="res.simpleResponse.textToSpeech == 'Dame tus datos'"
+                                         u otra forma de mandar un mensaje que despliegue el form
                                     <div class="col-12">
                                         <chat-fill-form></chat-fill-form>
                                     </div>
+                                    -->
 
                                     <!-- Display basic card response -->
                                     <div class="col-12" v-if="res.basicCard">
@@ -38,14 +41,11 @@
                                         </chat-list-select>
                                     </div>
 
-
                                     <!-- Display Carousel card response -->
                                     <div class="col-12" v-if="res.carouselBrowse">
                                         <chat-carousel-select v-on:carouselSumit="clickSubmit" v-bind:carouselSelect="res.carouselBrowse.items">
                                         </chat-carousel-select>
                                     </div>
-
-
 
                                     <!-- Display image only -->
                                     <div class="col-12" v-if="res.image">
