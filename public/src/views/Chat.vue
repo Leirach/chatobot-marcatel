@@ -121,7 +121,7 @@
 </template>
 
 <script>
-    import uuidv4 from "uuid/v4";
+    import { v4 as uuidv4 } from 'uuid';
     import axios from "axios";
     import config from "../../config";
     import { getToken } from "../credentials/gcloud_credentials";
@@ -132,7 +132,7 @@
     import FillForm from "./FillForm";
     import key from '../credentials/marcatel-bot.json';
     const { GoogleToken } = require('gtoken');
-    // const sessionId = uuidv4(); need an alternative for self inc ids or similar
+    const sessionId = uuidv4();
     const langCode = config.locale.settings.recognitionLang;
     let chatUrl = config.app.dialogflowUrl;
     let agent = config.Dialogflow.agent;
@@ -151,7 +151,7 @@
                 greeting: "",
                 id: 1,
                 queryFlag: false,
-                accessToken: ""
+                accessToken: "",
             };
         },
         created: function () {
@@ -182,7 +182,7 @@
                     vm.queryFlag = true;
                     axios({
                         method: "post",
-                        url: chatUrl + `/12345678:detectIntent`,
+                        url: chatUrl + `/${sessionId}:detectIntent`,
                         headers: {
                             authorization: `Bearer ${this.accessToken}`
                         },
@@ -235,7 +235,6 @@
             },
         },
         mounted() {
-
         }
     };
 </script>
