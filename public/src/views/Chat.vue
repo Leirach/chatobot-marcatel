@@ -106,7 +106,7 @@
             <div class="message-row">
                 <v-text-field solo type="text" :placeholder="config.locale.strings.queryTitle"
                             v-model="query" @keyup.enter="submit" class="message-area"
-                            :disabled="!!queryFlag" id="queryinput" height="60px" 
+                            :disabled="!!queryFlag" id="queryinput" height="60px"
                             hide-details autofocus>
                 </v-text-field>
             </div>
@@ -196,24 +196,12 @@
                         }
                     }).then(response => {
                         response = response.data;
-                        console.log(response.queryResult.webhookPayload.google);
-                        //console.log(response.queryResult.webhookPayload.google);
                         vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
-                        console.log( response.queryResult.webhookPayload.google.richResponse);
-                        //vm.chat[vm.id - 1].carousel = response.queryResult.webhookPayload.google.systemIntent.data.carouselSelect.items
-                        //console.log(userMsg.carousel)
                         vm.scroll();
                         vm.id++;
-                        vm.query = "";
-                        vm.queryFlag = false;
-                        document.getElementById("queryinput").focus();
-                        $("#queryinput").focus();
+                        this.resetQueryInput()
                     }).catch(err => {
-                        // placeholder, probablemente hay que cambiar esto
-                        vm.query = "";
-                        vm.queryFlag = false;
-                        document.getElementById("queryinput").focus();
-                        $("#queryinput").focus();
+                        this.resetQueryInput()
                     });
                 }
             },
@@ -221,6 +209,13 @@
                 let vm = this;
                 vm.query = keyword;
                 vm.submit();
+            },
+            resetQueryInput() {
+                this.query = "";
+                this.queryFlag = false;
+                window.setTimeout(function () {
+                    document.getElementById('queryinput').focus();
+                }, 0);
             },
             scroll() {
                 let vm = this;
