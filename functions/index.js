@@ -11,8 +11,8 @@ admin.initializeApp({
 });
 const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse, BrowseCarousel, BrowseCarouselItem,} = require('actions-on-google');
-const {locationCard} = require('./constants/objects.js');
-const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./constants/array.js');
+const {locationCard} = require('./data/objects.js');
+const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./data/array.js');
 let db = admin.firestore();
 
 const Lifespans = {
