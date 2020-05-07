@@ -226,31 +226,3 @@ Array.prototype.getRandomVal = function () {
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
 
-/*
-const {locationCard} = require('./constants/objects.js');
-const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./constants/array.js');
-const sgMail = require('@sendgrid/mail');
-
-
-exports.genericEmail = functions.https.onCall(async (data, context) => {
-    if(!context.data.email){
-        throw new functions.https.HttpsError('failed-precondition', 'Must have a valid email');
-    }
-
-    const msg ={
-        to: context.data.email,
-        from: 'hello@marcatel.com',
-        templateId: TEMPLATE_ID,
-        dynamic_template_data: {
-            subject: data.subject,
-            name: data.text,
-        },
-    };
-
-    await sgMail.send(msg);
-
-    // response must be JSON serializable
-    return { success: true };
-});
-*/
-
