@@ -4,7 +4,8 @@
 /** Dialogflow Context Lifespans {@link https://dialogflow.com/docs/contexts#lifespan} */
 
 'use strict';
-const {db, postUserIntoFirestore} = require('./data/firebase.js');
+const {db} = require('./data/firebase.js');
+const {postUserIntoFirestore} = require('./data/database');
 const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse, 
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
@@ -66,7 +67,7 @@ app.intent('Marcatel.simple.contact_Numero', (conv) => {
     conv.ask("Muy bien, ya sería todo. Pronto te pondremos en contacto con un representante Marcatel.");
     conv.ask("¿Puedo ayudarte con otra cosa?");
     try {
-        let data = conv.body.queryResult.outputContexts.parameters;
+        let data = conv.body.queryResult.outputContexts[0].parameters;
         postUserIntoFirestore(data);
     } catch (error) {
         console.error("Error with params in request:", error);

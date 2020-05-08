@@ -1,8 +1,9 @@
 const functions = require('firebase-functions');
 const nodemailer = require("nodemailer");
-const db = require('./firebase.js');
+const {db} = require('./firebase.js');
 
 function postUserIntoFirestore(userdata) {
+    console.log(userdata);
     let docRef = db.collection('users').add({
         name : userdata.name,
         mail: userdata.email,
@@ -472,4 +473,4 @@ function sendMailToMarcatel( email ){
 }
 
 
-module.exports = {db, postUserIntoFirestore}
+module.exports = {postUserIntoFirestore}
