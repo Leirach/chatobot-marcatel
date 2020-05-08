@@ -6,22 +6,22 @@
                 <div class="row pt-2" v-for="msg in chat" :id="'top'+(msg.nid)">
                     <div class="col-12">
                         <!-- Display written query -->
-                        <div class="row" v-if="msg.question">
-                            <div class="col mb-2 text-left d-flex justify-content-end">
+                        <div class="row " v-if="msg.question">
+                            <div class="ml-1 mr-1 col mb-2 text-left d-flex justify-content-end">
                                 <div class="question">{{msg.question}}</div>
                             </div>
                         </div>
 
                         <!-- Display answers after they are returned by dialogflow -->
                         <div class="row" v-if="Object.keys(msg.answer).length >= 1">
-                            <div class="col-9 text-left">
+                            <div class="ml-1 mr-1 col-11 text-left">
                                 <!-- Display all types of answers -->
                                 <div class="row pb-2" v-for="res in msg.answer.items">
                                     <!-- Display simple response -->
                                     <div class="col-12" v-if="res.simpleResponse">
                                         <div class="answerText">{{res.simpleResponse.textToSpeech}}</div>
                                     </div>
-                                    <!-- FILL FORM PARA ENVIAR AL CHAT 
+                                    <!-- FILL FORM PARA ENVIAR AL CHAT
                                          falta algo como v-if="res.simpleResponse.textToSpeech == 'Dame tus datos'"
                                          u otra forma de mandar un mensaje que despliegue el form
                                     <div class="col-12">

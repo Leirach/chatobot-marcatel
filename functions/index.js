@@ -7,7 +7,7 @@
 const {db} = require('./data/firebase.js');
 const {postUserIntoFirestore} = require('./data/database');
 const functions = require('firebase-functions');
-const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse, 
+const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse,
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
 const {locationCard} = require('./data/objects.js');
 const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./data/array.js');
@@ -56,16 +56,32 @@ app.intent('Marcatel.simple.contact_Cliente', (conv) => {
 });
 
 app.intent('Marcatel.simple.contact_Nombre', (conv) => {
-    conv.ask("Por favor, dame un email donde podamos contactarte.");
+    let nombre = conv.parameters.name
+    conv.ask(`Perfecto ${nombre}. Por favor, brindarnos un email donde podamos contactarte.`);
 });
 
 app.intent('Marcatel.simple.contact_Email', (conv) => {
-    conv.ask("Por último, necesito un número de telefono.");
+    conv.ask("Por último, necesito un número de telefono de 10 dígitos.");
 });
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
-    conv.ask("Muy bien, ya sería todo. Pronto te pondremos en contacto con un representante Marcatel.");
-    conv.ask("¿Puedo ayudarte con otra cosa?");
+    conv.ask("Perfecto. Te hemos envíado un correo. Pronto te pondremos en contacto con un representante Marcatel.");
+    conv.ask(
+        new BasicCard({
+            title: "Whatsapp Marcatel",
+            subtitle: "Lee el siguiente QR para dirigirte a nuestro Whatsapp u oprime el botón.",
+            image: new Image({
+                url: "https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/images%2Fqr_prueba.png?alt=media&token=c71ccd42-3604-441c-a924-7ae9acd55d4c",
+                alt: 'QR',
+            }),
+            buttons: new Button({
+                title: 'Ir a Whatsapp',
+                url: "https://api.whatsapp.com/send?phone=9212040105&text=&source=&data=",
+            }),
+        })
+    );
+    conv.ask("¿Puedo ayudarte en algo más?");
+    conv.ask(new Suggestions(ALL_CHIPS));
     try {
         let data = conv.body.queryResult.outputContexts[0].parameters;
         postUserIntoFirestore(data);
@@ -214,19 +230,24 @@ app.intent('Marcatel.dynamic.services_selection_[card]', async (conv, param, opt
                 conv.ask(`${service.name}, ${service.description}`)
             }else{
                 conv.ask(`Esta es la información sobre${service.name}.`)
-                conv.ask(
-                    new BasicCard({
-                        title: service.name,
-                        subtitle: service.description,
-                        image: new Image({
-                            url: service.img_url,
-                            alt: 'service.name',
-                        })
-                    })
-                );
             }
-            conv.ask('¿Te gustaría que te contactemos con alguien de ventas?');
-            conv.ask(new Suggestions(["Si","No", "Ir al Inicio"]));
+            conv.ask(
+                new BasicCard({
+                    title: service.name,
+                    subtitle: service.description,
+                    image: new Image({
+                        url: service.img_url,
+                        alt: 'service.name',
+                    })
+                })
+            );
+
+            if (!conv.screen) {
+                conv.ask('Para regresar al inicio Di: Inicio o si deseas más información Di: Contacto de Ventas');
+            }else{
+                conv.ask('¿Te gustaría que te contactemos con alguien de ventas o prefieres regresar al menú principal?');
+            }
+            conv.ask(new Suggestions(["Ventas", "Ir al Inicio"]));
             return ""
         }).catch((e) => {
             console.log('error:', e);

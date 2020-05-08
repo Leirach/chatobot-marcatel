@@ -40,7 +40,7 @@ const FEATURES_SAMPLE = [
     "¿Tienen algun número telefónico?"//Para contacto
 ];
 
-const ALL_CHIPS = ["Servicios", "Ubicación","Horarios","Quienes somos","¿Qué puedes hacer?"];
+const ALL_CHIPS = ["Servicios", "Ubicación","Horarios","Contacto","Quienes somos","¿Qué puedes hacer?"];
 const LOCATION_CHIPS = ["Monterrey", "CDMX","Guadalajara"];
 const SERVICE_CHIPS = ["Conectividad", "Telefonía","Cloud", "Servicios Administrados"];
 

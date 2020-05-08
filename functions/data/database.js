@@ -10,6 +10,7 @@ function postUserIntoFirestore(userdata) {
         phone: userdata.phone_number
     }).then(ref => {
         console.log('Added document with ID: ', ref.id);
+        sendMailtoCustomer(userdata.email)
         return 1;
     }).catch((err)=>{
       console.err("Error agregando usuario:", err);
@@ -23,12 +24,12 @@ function sendMailtoCustomer( email ){
         port: 465,
         secure: true,
         auth: {
-            user: 'info@marcatel.com',
-            pass: 'contraseña.'
+            user: 'chatbot.marcatel@gmail.com',
+            pass: 'chatbot2020marcatel'
         }
     });
     var userOptions = {
-        from: "Marcatel | Mensaje Automático <info@marcatel.com>",
+        from: "Marcatel | Mensaje Automático <chatbot.marcatel@gmail.com>",
         to: email,
         subject: "Marcatel | ",
         text: `Testo del mail` ,
@@ -393,7 +394,7 @@ function sendMailtoCustomer( email ){
                                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                                   <tbody>
                                                     <tr>
-                                                      <td> <a href="https://api.whatsapp.com/send?phone=528112904687&text=&source=&data=" target="_blank">Enviar Whatsapp</a> </td>
+                                                      <td> <a href="https://api.whatsapp.com/send?phone=9212040105&text=&source=&data=" target="_blank">Enviar Whatsapp</a> </td>
                                                     </tr>
                                                   </tbody>
                                                 </table>
@@ -450,12 +451,12 @@ function sendMailToMarcatel( email ){
         port: 465,
         secure: true,
         auth: {
-            user: 'info@marcatel.com',
+            user: 'chatbot.marcatel@gmail.com',
             pass: 'contraseña.'
         }
     });
     var userOptions = {
-        from: "Marcatel | Mensaje Automático <info@marcatel.com>",
+        from: "Marcatel | Mensaje Automático <chatbot.marcatel@gmail.com>",
         to: email,
         subject: "Marcatel | ",
         text: `Testo del mail` ,

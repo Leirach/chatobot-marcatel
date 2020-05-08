@@ -1,6 +1,7 @@
 <template >
-	<v-container fluid style="padding:0px; margin-right: 0px; margin-left: 0px; margin-bottom: 10px">
+	<v-container class="fill-height">
 		<v-app-bar
+				absolute
 				color="#FDD403"
 				dense>
 			<v-toolbar-title style="font-weight: normal">Asistente Marcatel</v-toolbar-title>
@@ -13,7 +14,6 @@
 		<v-flex>
 			<app-chat></app-chat>
 		</v-flex>
-
 	</v-container>
 </template>
 
