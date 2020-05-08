@@ -1,5 +1,7 @@
 const functions = require('firebase-functions');
 const nodemailer = require("nodemailer");
+const {admin} = require('./firebase.js');
+
 
 
 /*
@@ -31,8 +33,23 @@ exports.genericEmail = functions.https.onCall(async (data, context) => {
 */
 
 
+admin.initializeApp({
+    credential : admin.credential.applicationDefault();
+});
+
+
+const db = admin.firestore();
+
+
 function postUserIntoFirestore(userdata) {
 //create firestore post
+    let docRef = db.collection('users').add({
+        name : userdata.name,
+        mail: userdata.email,
+        phone: userdata.phone_number
+    }).then(ref => {
+        console.log('Added document with ID: ', ref.id);
+    });
 }
 
 

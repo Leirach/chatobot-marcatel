@@ -4,7 +4,7 @@
 /** Dialogflow Context Lifespans {@link https://dialogflow.com/docs/contexts#lifespan} */
 
 'use strict';
-const admin = require('firebase-admin');
+const {admin} = require('./data/firebase.js');
 let serviceAccount = require('./credentials/marcatel-bot-firebase-adminsdk-4jvz8-2fb01dc55e');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -14,6 +14,7 @@ const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse,
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
 const {locationCard} = require('./constants/objects.js');
 const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./constants/array.js');
+const {postUser} = require('./data/database.js');
 const sgMail = require('@sendgrid/mail');
 
 let db = admin.firestore();
