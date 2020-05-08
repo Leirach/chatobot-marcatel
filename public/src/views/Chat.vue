@@ -13,7 +13,7 @@
                         </div>
 
                         <!-- Display answers after they are returned by dialogflow -->
-                        <div class="row" v-if="Object.keys(msg.answer).length > 1">
+                        <div class="row" v-if="Object.keys(msg.answer).length >= 1">
                             <div class="col-9 text-left">
                                 <!-- Display all types of answers -->
                                 <div class="row pb-2" v-for="res in msg.answer.items">
@@ -21,10 +21,13 @@
                                     <div class="col-12" v-if="res.simpleResponse">
                                         <div class="answerText">{{res.simpleResponse.textToSpeech}}</div>
                                     </div>
-
+                                    <!-- FILL FORM PARA ENVIAR AL CHAT 
+                                         falta algo como v-if="res.simpleResponse.textToSpeech == 'Dame tus datos'"
+                                         u otra forma de mandar un mensaje que despliegue el form
                                     <div class="col-12">
                                         <chat-fill-form></chat-fill-form>
                                     </div>
+                                    -->
 
                                     <!-- Display basic card response -->
                                     <div class="col-12" v-if="res.basicCard">
@@ -38,14 +41,11 @@
                                         </chat-list-select>
                                     </div>
 
-
                                     <!-- Display Carousel card response -->
                                     <div class="col-12" v-if="res.carouselBrowse">
                                         <chat-carousel-select v-on:carouselSumit="clickSubmit" v-bind:carouselSelect="res.carouselBrowse.items">
                                         </chat-carousel-select>
                                     </div>
-
-
 
                                     <!-- Display image only -->
                                     <div class="col-12" v-if="res.image">
@@ -121,7 +121,7 @@
 </template>
 
 <script>
-    import uuidv4 from "uuid/v4";
+    import { v4 as uuidv4 } from 'uuid';
     import axios from "axios";
     import config from "../../config";
     import { getToken } from "../credentials/gcloud_credentials";
@@ -132,7 +132,7 @@
     import FillForm from "./FillForm";
     import key from '../credentials/marcatel-bot.json';
     const { GoogleToken } = require('gtoken');
-    // const sessionId = uuidv4(); need an alternative for self inc ids or similar
+    const sessionId = uuidv4();
     const langCode = config.locale.settings.recognitionLang;
     let chatUrl = config.app.dialogflowUrl;
     let agent = config.Dialogflow.agent;
@@ -151,7 +151,7 @@
                 greeting: "",
                 id: 1,
                 queryFlag: false,
-                accessToken: ""
+                accessToken: "",
             };
         },
         created: function () {
@@ -182,7 +182,7 @@
                     vm.queryFlag = true;
                     axios({
                         method: "post",
-                        url: chatUrl + `/12345678:detectIntent`,
+                        url: chatUrl + `/${sessionId}:detectIntent`,
                         headers: {
                             authorization: `Bearer ${this.accessToken}`
                         },
@@ -196,24 +196,13 @@
                         }
                     }).then(response => {
                         response = response.data;
-                        console.log(response.queryResult.webhookPayload.google);
-                        //console.log(response.queryResult.webhookPayload.google);
+                        console.log(response);
                         vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
-                        console.log( response.queryResult.webhookPayload.google.richResponse);
-                        //vm.chat[vm.id - 1].carousel = response.queryResult.webhookPayload.google.systemIntent.data.carouselSelect.items
-                        //console.log(userMsg.carousel)
                         vm.scroll();
                         vm.id++;
-                        vm.query = "";
-                        vm.queryFlag = false;
-                        document.getElementById("queryinput").focus();
-                        $("#queryinput").focus();
+                        this.resetQueryInput()
                     }).catch(err => {
-                        // placeholder, probablemente hay que cambiar esto
-                        vm.query = "";
-                        vm.queryFlag = false;
-                        document.getElementById("queryinput").focus();
-                        $("#queryinput").focus();
+                        this.resetQueryInput()
                     });
                 }
             },
@@ -221,6 +210,13 @@
                 let vm = this;
                 vm.query = keyword;
                 vm.submit();
+            },
+            resetQueryInput() {
+                this.query = "";
+                this.queryFlag = false;
+                window.setTimeout(function () {
+                    document.getElementById('queryinput').focus();
+                }, 0);
             },
             scroll() {
                 let vm = this;
@@ -235,7 +231,6 @@
             },
         },
         mounted() {
-
         }
     };
 </script>
