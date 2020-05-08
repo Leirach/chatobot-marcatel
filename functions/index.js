@@ -57,6 +57,7 @@ app.intent('Marcatel.simple.aboutus', (conv) => {
     conv.ask(new Suggestions(ALL_CHIPS));
 });
 
+/* ===== CONTACTO ===== */
 app.intent('Marcatel.simple.contact', (conv) => {
     conv.ask("¿Eres cliente marcatel actualmente?");
 });
@@ -74,6 +75,7 @@ app.intent('Marcatel.simple.contact_Email', (conv) => {
 });
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
+    console.log(conv.body.outputContexts);
     conv.ask("Muy bien, ya sería todo. Pronto te pondremos en contacto con un representante Marcatel.");
     conv.ask("¿Puedo ayudarte con otra cosa?");
 });
