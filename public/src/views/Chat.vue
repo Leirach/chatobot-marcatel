@@ -59,35 +59,14 @@
                                                 <div class="mask rgba-white-slight"></div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <!-- Display Link Out Suggestion chip -->
-                                    <div class="col-12"
-                                         v-if="res.message === 'linkOutSuggestion'">
-                                        <div class="suggestions link">
-                                            <div v-if="res.linkOutSuggestion">
-                                                <a
-                                                        :href="res.linkOutSuggestion.uri"
-                                                        target="_blank">
-                                                    {{res.linkOutSuggestion.destinationName}}
-                                                    <i
-                                                            class="fas fa-external-link-alt"
-                                                            style="margin-left:3px;"
-                                                    ></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div> 
                                 </div>
-                                <!-- Display Suggestion chip -->
-                                <template class="col-12" v-if="msg.answer.suggestions">
-                                    <v-chip style="margin-top: 4px; margin-right: 2px;"
-                                            v-for="s in msg.answer.suggestions"
-                                            color="primary" outlined
-                                            @click="clickSubmit(s.title)">
-                                        <div v-if="s.title">{{s.title}}</div>
-                                    </v-chip>
-                                </template>
+                                <transition name="fade">
+                                    <div v-if="msg.answer.suggestions && msg.nid == id-1">
+                                        <chat-chips v-on:chipSubmit="clickSubmit" v-bind:chips="msg.answer.suggestions">
+                                        </chat-chips>
+                                    </div>
+                                </transition>
                             </div>
                         </div>
                         <div class="row" v-else>
@@ -130,6 +109,7 @@
     import ListSelect from "./ListSelect";
     import CarouselSelect from "./CarouselSelect";
     import FillForm from "./FillForm";
+    import Chips from './Chips';
     import key from '../credentials/marcatel-bot.json';
     const { GoogleToken } = require('gtoken');
     const sessionId = uuidv4();
@@ -141,7 +121,8 @@
             chatBasicCard: BasicCard,
             chatListSelect: ListSelect,
             chatCarouselSelect: CarouselSelect,
-            chatFillForm: FillForm
+            chatFillForm: FillForm,
+            chatChips: Chips
         },
         data() {
             return {
@@ -151,6 +132,7 @@
                 greeting: "",
                 id: 1,
                 queryFlag: false,
+                showChips: true,
                 accessToken: "",
             };
         },
@@ -217,6 +199,11 @@
                 window.setTimeout(function () {
                     document.getElementById('queryinput').focus();
                 }, 0);
+            },
+            removePreviousChips() {
+                window.setTimeout(function () {
+                    document.getElementById('chips').remove();
+                }, 1);
             },
             scroll() {
                 let vm = this;
