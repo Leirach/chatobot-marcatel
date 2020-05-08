@@ -5,17 +5,11 @@
 
 'use strict';
 const {db} = require('./data/firebase.js');
-let serviceAccount = require('./credentials/marcatel-bot-firebase-adminsdk-4jvz8-2fb01dc55e');
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
 const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse, 
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
-const {locationCard} = require('./constants/objects.js');
-const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./constants/array.js');
-const {postUser} = require('./data/database.js');
-const sgMail = require('@sendgrid/mail');
+const {locationCard} = require('./data/objects.js');
+const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./data/array.js');
 
 const Lifespans = {
     DEFAULT: 3,
@@ -26,12 +20,6 @@ db.settings({timestampsInSnapshots: true});
 const app = dialogflow({
     debug: false,
 });
-
-const API_KEY = functions.config().sendgrid.key;
-const TEMPLATE_ID = functions.config().sendgrid.template;
-sgMail.setApiKey(API_KEY);
-
-
 
 app.intent('Default Welcome Intent', (conv) => {
     conv.ask("¡Hola! Soy tu asistente de Marcatel y estoy aquí para resolver tus dudas!");
@@ -75,9 +63,13 @@ app.intent('Marcatel.simple.contact_Email', (conv) => {
 });
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
-    console.log(conv.body.outputContexts);
     conv.ask("Muy bien, ya sería todo. Pronto te pondremos en contacto con un representante Marcatel.");
     conv.ask("¿Puedo ayudarte con otra cosa?");
+
+    /*
+    let data = conv.body.queryResult.outputContexts.parameters;
+    post data;
+    */
 });
 
 app.intent('Marcatel.simple.location_followup', (conv) => {

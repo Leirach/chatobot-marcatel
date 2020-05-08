@@ -41,6 +41,9 @@ function postUserIntoFirestore(userdata) {
         phone: userdata.phone_number
     }).then(ref => {
         console.log('Added document with ID: ', ref.id);
+        return 1;
+    }).catch((err)=>{
+      console.err("Error agregando usuario:", err);
     });
 }
 
