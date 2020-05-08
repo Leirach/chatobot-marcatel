@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const nodemailer = require("nodemailer");
-const {admin} = require('./firebase.js');
+const {db} = require('./firebase.js');
 
 
 
@@ -31,14 +31,6 @@ exports.genericEmail = functions.https.onCall(async (data, context) => {
     return { success: true };
 });
 */
-
-
-admin.initializeApp({
-    credential : admin.credential.applicationDefault();
-});
-
-
-const db = admin.firestore();
 
 
 function postUserIntoFirestore(userdata) {
