@@ -1,7 +1,6 @@
 <template >
-	<v-container class="fill-height">
+	<v-container fluid class="main-container">
 		<v-app-bar
-				absolute
 				color="#FDD403"
 				dense>
 			<v-toolbar-title style="font-weight: normal">Asistente Marcatel</v-toolbar-title>
