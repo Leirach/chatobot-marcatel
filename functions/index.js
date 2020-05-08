@@ -21,6 +21,7 @@ let db = admin.firestore();
 const Lifespans = {
     DEFAULT: 3,
 };
+
 db.settings({timestampsInSnapshots: true});
 
 const app = dialogflow({
@@ -121,7 +122,9 @@ app.intent('Marcatel.simple.working_hours_followup', (conv) => {
 });
 
 app.intent('Marcatel.dynamic.services', (conv) => {
-    conv.ask('Contamos con 4 servicios principales: Conectividad, Telefonia, Cloud y Servicios Administrados');
+    if (!conv.screen) {
+        conv.ask('Contamos con 4 servicios principales: Conectividad, Telefonia, Cloud y Servicios Administrados');
+    }
     conv.ask("¿Sobre qué servicio te gustaría información?");
     conv.ask(new BrowseCarousel({
         items: [
@@ -189,7 +192,9 @@ app.intent('Marcatel.dynamic.services_selection', async (conv, param, option) =>
                     })
                 }))
             });
-            conv.ask(`Contamos con ${items.length} servicios de ${servicio}. Tales como: ${chips[0]}, ${chips[1]} y ${chips[2]}.`);
+            if (!conv.screen) {
+                conv.ask(`Contamos con ${items.length} servicios de ${servicio}. Tales como: ${chips[0]}, ${chips[1]} y ${chips[2]}.`);
+            }
             conv.ask("¿Sobre qué servicio deseas información?")
             conv.ask(new BrowseCarousel({items}));
             conv.ask(new Suggestions(chips));
@@ -215,17 +220,17 @@ app.intent('Marcatel.dynamic.services_selection_[card]', async (conv, param, opt
                 conv.ask(`${service.name}, ${service.description}`)
             }else{
                 conv.ask(`Esta es la información sobre${service.name}.`)
-            }
-            conv.ask(
-                new BasicCard({
-                    title: service.name,
-                    subtitle: service.description,
-                    image: new Image({
-                        url: service.img_url,
-                        alt: 'service.name',
+                conv.ask(
+                    new BasicCard({
+                        title: service.name,
+                        subtitle: service.description,
+                        image: new Image({
+                            url: service.img_url,
+                            alt: 'service.name',
+                        })
                     })
-                })
-            );
+                );
+            }
             conv.ask('¿Te gustaría que te contactemos con alguien de ventas?');
             conv.ask(new Suggestions(["Si","No", "Ir al Inicio"]));
             return ""
@@ -244,28 +249,5 @@ Array.prototype.getRandomVal = function () {
     return this[Math.floor(Math.random() * this.length)];
 };
 
-
-
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
-exports.genericEmail = functions.https.onCall(async (data, context) => {
-    if(!context.data.email){
-        throw new functions.https.HttpsError('failed-precondition', 'Must have a valid email');
-    }
-
-    const msg ={
-        to: context.data.email,
-        from: 'hello@marcatel.com',
-        templateId: TEMPLATE_ID,
-        dynamic_template_data: {
-            subject: data.subject,
-            name: data.text,
-        },
-    };
-
-    await sgMail.send(msg);
-
-    // response must be JSON serializable
-    return { success: true };
-});
-
 
