@@ -139,8 +139,8 @@
         created: function () {
             getToken((err, token) => {
                 if (err) {
-                    console.log("ERROR: ");
-                    console.log(err);
+                    console.error("ERROR: ");
+                    console.error(err);
                     return ;
                 }
                 this.accessToken = token.access_token;
@@ -178,7 +178,7 @@
                         }
                     }).then(response => {
                         response = response.data;
-                        console.log(response);
+                        //console.log(response);
                         vm.chat[vm.id - 1].answer = response.queryResult.webhookPayload.google.richResponse;
                         vm.scroll();
                         vm.id++;

@@ -10,7 +10,8 @@ const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse,
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
 const {locationCard} = require('./data/objects.js');
-const {working_hours, address, FALLBACK_RESPONSE, FEATURES_SAMPLE, ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./data/array.js');
+const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE, 
+    ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./data/array.js');
 
 const Lifespans = {
     DEFAULT: 3,
@@ -143,7 +144,7 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                 description: 'Proveemos conexiones virtuales, tales como E-Access, E-Lan, E-Line y Internet Dedicado',
                 url: 'https://www.marcatel.com/servicios',
                 image: new Image({
-                    url: 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FCONECTIVIDAD.png?alt=media&token=eaa63ac2-5f79-41e5-9257-61aebbb0e311',
+                    url: serviceImg['CONECTIVIDAD'],
                     alt: 'Imagen de Conectividad',
                 }),
             }),
@@ -153,7 +154,7 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                     'Videoconferencia, VPN y Terminación WS',
                 url: 'https://www.marcatel.com/servicios',
                 image: new Image({
-                    url: 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FTELEFONIA.png?alt=media&token=d7fa2a05-4f96-4fb0-ba63-db5829bd5e59',
+                    url: serviceImg['TELEFONIA'],
                     alt: 'Imagen de Telefonia',
                 }),
             }),
@@ -163,7 +164,7 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                     'CCaaS y Servicios TI.',
                 url: 'https://www.marcatel.com/servicios',
                 image: new Image({
-                    url: 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FCLOUD.png?alt=media&token=83b67ca0-80a6-4790-a306-0c39ceb8c324',
+                    url: serviceImg['CLOUD'],
                     alt: 'Imagen Cloud',
                 }),
             }),
@@ -172,7 +173,7 @@ app.intent('Marcatel.dynamic.services', (conv) => {
                 description: 'Proveemos servicios de: Firewall, Conmutador SIP y Router.',
                 url: 'https://www.marcatel.com/servicios',
                 image: new Image({
-                    url: 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FADMINISTRADOS.png?alt=media&token=b468fc38-d47e-4f01-a21b-e4f7003c13ed',
+                    url: serviceImg['ADMINISTRADOS'],
                     alt: 'Imagen Servicios Administrados',
                 }),
             }),
