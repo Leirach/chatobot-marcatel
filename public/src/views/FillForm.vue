@@ -40,7 +40,7 @@
         methods: {
             submit () {
                 let form = {name: this.name, email: this.email, company: this.company, client: this.client};
-                console.log(form)
+                //console.log(form)
             }
         },
     };

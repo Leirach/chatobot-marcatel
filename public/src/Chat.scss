@@ -6,11 +6,17 @@ $light: #ffeb85;
     -webkit-tap-highlight-color: transparent;
 }
 // Chat window
+.main-container {
+    padding:0px !important;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+
+
 .chat-window {
     overflow: auto;
-    height: calc(100vh - 128px);
-    // border: 1px solid;
-    // border-color: #cccccc;
+    height: calc(100vh - 118px);
     padding: 10px 15px;
     color: #272727;
 }
@@ -90,6 +96,13 @@ $light: #ffeb85;
 .loader {
     width: 90px;
     margin: 0px 10px 10px;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
 }
 
 //Probably unused

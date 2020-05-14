@@ -12,7 +12,7 @@ const {
 const {
     address,
     address_url,
-    img,
+    mapImg,
 } = require('./array.js');
 
 
@@ -21,7 +21,7 @@ function locationCard(city) {
         title: city,
         subtitle: address[city],
         image: new Image({
-            url: img[city],
+            url: mapImg[city],
             alt: 'Mapa de la dirección.',
         }),
         buttons: new Button({
