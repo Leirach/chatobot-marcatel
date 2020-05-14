@@ -22,8 +22,7 @@
                                         <div class="answerText">{{res.simpleResponse.textToSpeech}}</div>
                                     </div>
                                     <!-- FILL FORM PARA ENVIAR AL CHAT
-                                         falta algo como v-if="res.simpleResponse.textToSpeech == 'Dame tus datos'"
-                                         u otra forma de mandar un mensaje que despliegue el form
+                                         no se usa
                                     <div class="col-12">
                                         <chat-fill-form></chat-fill-form>
                                     </div>

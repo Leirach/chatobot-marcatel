@@ -29,24 +29,14 @@
 				welcomeTitle: config.locale.strings.welcomeTitle,
 				time: "0",
 				date: "0",
-				week: ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"],
-				greeting: "",
 			};
 		},
 		methods:{
+			// fecha y hora en el header
 			updateTime() {
-				let today = new Date();
-				let hrs = today.getHours();
 				this.time = moment().format('h:mm a');
 				this.date = moment().format('ddd L');
 			},
-			zeroPadding(num, digit) {
-				let zero = "";
-				for (let i = 0; i < digit; i++) {
-					zero += "0";
-				}
-				return (zero + num).slice(-digit);
-			}
 		},
 		mounted() {
 			let vm = this;
@@ -55,18 +45,6 @@
 			setInterval(() => {
 				vm.updateTime();
 			}, 1000);
-
-			let time = new Date().getHours();
-			if (time < 12 && time >= 0) {
-				vm.greeting = "Buenos Días";
-			} else if (time >= 19) {
-				vm.greeting = "Buenas Noches";
-			} else if (time >= 12) {
-				vm.greeting = "Buenas Tardes";
-			} else {
-				vm.greeting = "Hola!";
-			}
-
 		}
 	};
 </script>
