@@ -10,7 +10,7 @@ const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse,
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
 const {locationCard} = require('./data/objects.js');
-const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE, 
+const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE,
     ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./data/array.js');
 
 const Lifespans = {
@@ -92,6 +92,7 @@ app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
     conv.ask(new Suggestions(ALL_CHIPS));
     try {
         let data = conv.body.queryResult.outputContexts[0].parameters;
+        console.log(data)
         postUserIntoFirestore(data);
     } catch (error) {
         console.error("Error with params in request:", error);

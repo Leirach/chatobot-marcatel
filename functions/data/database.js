@@ -7,10 +7,13 @@ function postUserIntoFirestore(userdata) {
     let docRef = db.collection('users').add({
         name : userdata.name,
         mail: userdata.email,
-        phone: userdata.phone_number
+        phone: userdata.phone_number,
+        message: userdata.message
+
     }).then(ref => {
         console.log('Added document with ID: ', ref.id);
         sendMailtoCustomer(userdata.email)
+        sendMailToMarcatel("alexandro4v@gmail.com",userdata.message,userdata.email, userdata.phone_number, userdata.name)
         return 1;
     }).catch((err)=>{
       console.err("Error agregando usuario:", err);
@@ -18,7 +21,7 @@ function postUserIntoFirestore(userdata) {
 }
 
 
-function sendMailtoCustomer( email ){
+function sendMailtoCustomer( email){
     var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',//Agregar correo no seguro
         port: 465,
@@ -39,7 +42,7 @@ function sendMailtoCustomer( email ){
                   <head>
                     <meta name="viewport" content="width=device-width" />
                     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                    <title>Simple Transactional Email</title>
+                    <title>Marcatel Email</title>
                     <style>
                       /* -------------------------------------
                           GLOBAL RESETS
@@ -177,7 +180,7 @@ function sendMailtoCustomer( email ){
                       }
                 
                       a {
-                        color: #3498db;
+                        color: #FDD404;
                         text-decoration: underline; 
                       }
                 
@@ -199,10 +202,10 @@ function sendMailtoCustomer( email ){
                       }
                         .btn a {
                           background-color: #ffffff;
-                          border: solid 1px #3498db;
+                          border: solid 1px #FDD404;
                           border-radius: 5px;
                           box-sizing: border-box;
-                          color: #3498db;
+                          color: #FDD404;
                           cursor: pointer;
                           display: inline-block;
                           font-size: 14px;
@@ -214,12 +217,12 @@ function sendMailtoCustomer( email ){
                       }
                 
                       .btn-primary table td {
-                        background-color: #3498db; 
+                        background-color: #FDD404; 
                       }
                 
                       .btn-primary a {
-                        background-color: #3498db;
-                        border-color: #3498db;
+                        background-color: #FDD404;
+                        border-color: #FDD404;
                         color: #ffffff; 
                       }
                 
@@ -369,7 +372,7 @@ function sendMailtoCustomer( email ){
                     </style>
                   </head>
                   <body class="">
-                    <span class="preheader">Hola!, Hemos recibido tu correo electrónico</span>
+                    <span class="preheader">¡Hola! Gracias por escribirnos desde nuestro Asistente Marcatel., Hemos recibido tu mensaje.</span>
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
                       <tr>
                         <td>&nbsp;</td>
@@ -386,7 +389,7 @@ function sendMailtoCustomer( email ){
                                     <tr>
                                       <td>
                                         <p>Hola!,</p>
-                                        <p>Hemos recibido tu correo electrónico. Si tienes dudas, puedes escribirnos a nuestro whatsapp empresarial.</p>
+                                        <p>¡Hola! Hemos recibido tu mensaje. Gracias por escribirnos desde nuestro Asistente Marcatel.</p>
                                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                           <tbody>
                                             <tr>
@@ -394,7 +397,7 @@ function sendMailtoCustomer( email ){
                                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                                   <tbody>
                                                     <tr>
-                                                      <td> <a href="https://api.whatsapp.com/send?phone=9212040105&text=&source=&data=" target="_blank">Enviar Whatsapp</a> </td>
+                                                      <td> <a href="https://api.whatsapp.com/send?phone=9212040105&text=&source=&data=" target="_blank">Enviar Whatsapp a Marcatel</a> </td>
                                                     </tr>
                                                   </tbody>
                                                 </table>
@@ -445,23 +448,33 @@ function sendMailtoCustomer( email ){
     });
 }
 
-function sendMailToMarcatel( email ){
+function sendMailToMarcatel( email ,message, usermail, usernumber, username ){
     var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',//Agregar correo no seguro
         port: 465,
         secure: true,
         auth: {
             user: 'chatbot.marcatel@gmail.com',
-            pass: 'contraseña.'
+            pass: 'chatbot2020marcatel'
         }
     });
     var userOptions = {
-        from: "Marcatel | Mensaje Automático <chatbot.marcatel@gmail.com>",
+        from: "Marcatel | Mensaje Automático desde Bot <chatbot.marcatel@gmail.com>",
         to: email,
-        subject: "Marcatel | ",
-        text: `Testo del mail` ,
-        html: `<p style="font-size:large">
-                Mensaje a marcatel...<br>
+        subject: "Mensaje Automático desde Bot",
+        text: `Mensaje de ${username} para Soporte Marcatel.` ,
+        html: `<p style="font-size:medium">
+                Nombre de usuario: ${username}<br>
+                </p>
+                <p style="font-size:large">
+                email: ${usermail}<br>
+                </p>
+                <p style="font-size:medium">
+                Mensaje: ${message}<br>
+                </p>
+                </p>
+                <p style="font-size:medium">
+                Número: ${usernumber}<br>
                 </p>`
     };
     transporter.sendMail(userOptions, (err, info) => {
