@@ -112,8 +112,10 @@
     import key from '../credentials/marcatel-bot.json';
     const { GoogleToken } = require('gtoken');
     const sessionId = uuidv4();
+    let versionApi =  config.app.apiVersion;
     const langCode = config.locale.settings.recognitionLang;
     let chatUrl = config.app.dialogflowUrl;
+    let apiUrl = config.app.apiUrl;
     let agent = config.Dialogflow.agent;
     export default {
         components: {
@@ -143,6 +145,8 @@
                     return ;
                 }
                 this.accessToken = token.access_token;
+                this.query="Hola!";
+                this.submit();
             });
         },
         methods: {
@@ -187,7 +191,7 @@
                     });
                 }
             },
-            clickSubmit(keyword) {
+           clickSubmit(keyword) {
                 let vm = this;
                 vm.query = keyword;
                 vm.submit();
