@@ -61,10 +61,17 @@ app.intent('Marcatel.simple.contact_Nombre', (conv) => {
 });
 
 app.intent('Marcatel.simple.contact_Email', (conv) => {
-    conv.ask("Por último, necesito un número de telefono de 10 dígitos.");
+    conv.ask("Por favor, bríndame tú número de telefono de 10 dígitos.");
 });
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
+    conv.ask("Finalmente. Brindame un mensaje que deseees agregar para hacerle llegar a nuestro equipo de soporte.");
+    if (!conv.screen) {
+        conv.ask('Puedes empezar a dictar en: 3, 2, 1, Ahora.');
+    }
+});
+
+app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
     conv.ask("Perfecto. Te hemos envíado un correo. Pronto te pondremos en contacto con un representante Marcatel.");
     conv.ask(
         new BasicCard({
@@ -90,6 +97,8 @@ app.intent('Marcatel.simple.contact_Numero', (conv) => {
     }
 
 });
+
+
 
 app.intent('Marcatel.simple.location_followup', (conv) => {
     conv.ask("Aquí tienes la dirección.");
