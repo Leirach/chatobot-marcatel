@@ -43,7 +43,7 @@ function sendMailtoCustomer( email){
         from: "Marcatel | Mensaje Automático <chatbot.marcatel@gmail.com>",
         to: email,
         subject: "Marcatel | ",
-        text: `Testo del mail` ,
+        text: `Texto del mail` ,
         html:  mailClient
    };
     transporter.sendMail(userOptions, (err, info) => {
