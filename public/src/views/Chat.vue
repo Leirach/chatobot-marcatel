@@ -112,10 +112,8 @@
     import key from '../credentials/marcatel-bot.json';
     const { GoogleToken } = require('gtoken');
     const sessionId = uuidv4();
-    let versionApi =  config.app.apiVersion;
     const langCode = config.locale.settings.recognitionLang;
     let chatUrl = config.app.dialogflowUrl;
-    let apiUrl = config.app.apiUrl;
     let agent = config.Dialogflow.agent;
     export default {
         components: {
