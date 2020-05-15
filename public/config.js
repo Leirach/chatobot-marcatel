@@ -9,7 +9,7 @@ module.exports = {
     app: {
         muted: true, // <- mute microphone by default
         googleIt: false, // <- ask users to google their request, in case of input.unknown action
-        dialogflowUrl: 'https://dialogflow.googleapis.com/v2/projects/marcatel-bot/agent/sessions'
+        dialogflowUrl: 'https://dialogflow.googleapis.com/v2/projects/marcatel-bot/agent/sessions',
     },
     locale: {
         strings: {

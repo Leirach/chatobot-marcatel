@@ -94,7 +94,6 @@ app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
     conv.ask(new Suggestions(ALL_CHIPS));
     try {
         let data = conv.body.queryResult.outputContexts[0].parameters;
-        console.log(data)
         postUserIntoFirestore(data);
     } catch (error) {
         console.error("Error with params in request:", error);
