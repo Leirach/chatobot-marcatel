@@ -15,7 +15,9 @@ function postUserIntoFirestore(userdata) {
     let docRef = db.collection('users').add({
         name : userdata.name,
         mail: userdata.email,
-        phone: userdata.phone_number
+        phone: userdata.phone_number,
+        message: userdata.message
+
     }).then(ref => {
         console.log('Added document with ID: ', ref.id);
         sendMailtoCustomer(userdata.email)
@@ -27,7 +29,7 @@ function postUserIntoFirestore(userdata) {
 }
 
 
-function sendMailtoCustomer( email ){
+function sendMailtoCustomer( email){
     var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',//Agregar correo no seguro
         port: 465,
@@ -43,7 +45,7 @@ function sendMailtoCustomer( email ){
         subject: "Marcatel | ",
         text: `Testo del mail` ,
         html:  mailClient
-    };
+   };
     transporter.sendMail(userOptions, (err, info) => {
         if(err){
             console.log(err)
@@ -53,21 +55,21 @@ function sendMailtoCustomer( email ){
     });
 }
 
-function sendMailToMarcatel( email ){
+function sendMailToMarcatel( email ,message, usermail, usernumber, username ){
     var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',//Agregar correo no seguro
         port: 465,
         secure: true,
         auth: {
             user: 'chatbot.marcatel@gmail.com',
-            pass: 'contraseña.'
+            pass: 'chatbot2020marcatel'
         }
     });
     var userOptions = {
-        from: "Marcatel | Mensaje Automático <chatbot.marcatel@gmail.com>",
+        from: "Marcatel | Mensaje Automático desde Bot <chatbot.marcatel@gmail.com>",
         to: email,
-        subject: "Marcatel | ",
-        text: `Testo del mail` ,
+        subject: "Mensaje Automático desde Bot",
+        text: `Mensaje de ${username} para Soporte Marcatel.` ,
         html: `<p style="font-size:medium">
                 Nombre de usuario: ${username}<br>
                 </p>

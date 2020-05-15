@@ -10,7 +10,7 @@ const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse,
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
 const {locationCard} = require('./data/objects.js');
-const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE, 
+const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE,
     ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./data/array.js');
 
 const Lifespans = {
@@ -62,10 +62,17 @@ app.intent('Marcatel.simple.contact_Nombre', (conv) => {
 });
 
 app.intent('Marcatel.simple.contact_Email', (conv) => {
-    conv.ask("Por último, necesito un número de telefono de 10 dígitos.");
+    conv.ask("Por favor, bríndame tú número de telefono de 10 dígitos.");
 });
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
+    conv.ask("Finalmente. Brindame un mensaje que deseees agregar para hacerle llegar a nuestro equipo de soporte.");
+    if (!conv.screen) {
+        conv.ask('Puedes empezar a dictar en: 3, 2, 1, Ahora.');
+    }
+});
+
+app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
     conv.ask("Perfecto. Te hemos envíado un correo. Pronto te pondremos en contacto con un representante Marcatel.");
     conv.ask(
         new BasicCard({
@@ -85,12 +92,15 @@ app.intent('Marcatel.simple.contact_Numero', (conv) => {
     conv.ask(new Suggestions(ALL_CHIPS));
     try {
         let data = conv.body.queryResult.outputContexts[0].parameters;
+        console.log(data)
         postUserIntoFirestore(data);
     } catch (error) {
         console.error("Error with params in request:", error);
     }
 
 });
+
+
 
 app.intent('Marcatel.simple.location_followup', (conv) => {
     conv.ask("Aquí tienes la dirección.");
