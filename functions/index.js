@@ -124,8 +124,7 @@ app.intent('Marcatel.simple.location', (conv) => {
 
 app.intent('Marcatel.simple.working_hours', (conv) => {
     let parsedCity = conv.parameters.sucursales;
-    conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.");
-    conv.ask("¿De cuál sucursal te interesa el horario?");
+    conv.ask("¿De cuál sucursal te interesa saber el horario?");
     conv.ask(new Suggestions(LOCATION_CHIPS));
 });
 
@@ -276,12 +275,12 @@ app.intent('Marcatel.dynamic.services_selection_[card]', async (conv, param, opt
 app.intent('Marcatel.simple.another_question', (conv) => {
     conv.ask("Claro, con gusto resuelvo tu duda.");
     conv.ask("¿Cómo puedo ayudarte?");
-    conv.ask(new Suggestions(LOCATION_CHIPS));
+    conv.ask(new Suggestions(ALL_CHIPS));
 });
 
 app.intent('Marcatel.simple.cancel', (conv) => {
-    console.log(conv.contexts.get())
     conv.ask(SIMPLE_CANCEL.getRandomVal());
+    conv.ask(new Suggestions(ALL_CHIPS));
 });
 
 

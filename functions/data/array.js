@@ -57,7 +57,7 @@ const FEATURES_SAMPLE = [
     "¿Cómo puedo ponerme en contacto?" //para contacto
 ];
 
-const ALL_CHIPS = ["Servicios", "Ubicación","Horarios","Contacto","Quienes somos","¿Qué puedes hacer?"];
+const ALL_CHIPS = ["Servicios", "Ubicación", "Horarios", "Contacto", "Quienes somos", "¿Qué puedes hacer?"];
 const LOCATION_CHIPS = ["Monterrey", "CDMX","Guadalajara"];
 const SERVICE_CHIPS = ["Conectividad", "Telefonía","Cloud", "Servicios Administrados"];
 
@@ -75,8 +75,8 @@ const SMALLTALK_GRACIAS = [
 ]
 
 const SIMPLE_CANCEL = [
-    "Ok.",
-    "Entendido"
+    "Ok. ¿Necesitas ayuda con algo más?",
+    "Entendido. ¿Necesitas ayuda con algo más?"
 ]
 
 module.exports = {
