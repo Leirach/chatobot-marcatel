@@ -143,6 +143,8 @@
                     return ;
                 }
                 this.accessToken = token.access_token;
+                this.query="Hola!";
+                this.submit();
             });
         },
         methods: {
@@ -187,7 +189,7 @@
                     });
                 }
             },
-            clickSubmit(keyword) {
+           clickSubmit(keyword) {
                 let vm = this;
                 vm.query = keyword;
                 vm.submit();

@@ -10,8 +10,9 @@ const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse,
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
 const {locationCard} = require('./data/objects.js');
-const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE,
-    ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS} = require('./data/array.js');
+const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE, 
+    ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS, SMALLTALK_ADIOS, SMALLTALK_GRACIAS,
+    SIMPLE_CANCEL} = require('./data/array.js');
 
 const Lifespans = {
     DEFAULT: 3,
@@ -66,7 +67,15 @@ app.intent('Marcatel.simple.contact_Email', (conv) => {
 });
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
+<<<<<<< HEAD
     conv.ask("Finalmente. Cuentanos un poco más sobre cómo podemos ayudarte.");
+=======
+    conv.ask("Finalmente. Brindame un mensaje que deseees agregar para hacerle llegar a nuestro equipo de soporte.");
+    /* Nel no jala
+    if (!conv.screen) {
+        conv.ask('Puedes empezar a dictar en: 3, 2, 1, Ahora.');
+    }*/
+>>>>>>> 3320b155fd91b68f9c6b3236a4c66910e8d612d5
 });
 
 app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
@@ -89,14 +98,12 @@ app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
     conv.ask(new Suggestions(ALL_CHIPS));
     try {
         let data = conv.body.queryResult.outputContexts[0].parameters;
-        console.log(data)
         postUserIntoFirestore(data);
     } catch (error) {
         console.error("Error with params in request:", error);
     }
 
 });
-
 
 
 app.intent('Marcatel.simple.location_followup', (conv) => {
@@ -121,8 +128,7 @@ app.intent('Marcatel.simple.location', (conv) => {
 
 app.intent('Marcatel.simple.working_hours', (conv) => {
     let parsedCity = conv.parameters.sucursales;
-    conv.ask("Estamos ubicados en Monterrey, CDMX y Guadalajara.");
-    conv.ask("¿De cuál sucursal te interesa el horario?");
+    conv.ask("¿De cuál sucursal te interesa saber el horario?");
     conv.ask(new Suggestions(LOCATION_CHIPS));
 });
 
@@ -225,6 +231,7 @@ app.intent('Marcatel.dynamic.services_selection', async (conv, param, option) =>
             });
 
 });
+
 app.intent('Marcatel.dynamic.services_selection_[card]', async (conv, param, option) => {
     let subservice = conv.parameters.subservices;
     var items = []
@@ -249,24 +256,50 @@ app.intent('Marcatel.dynamic.services_selection_[card]', async (conv, param, opt
                     })
                 })
             );
-
+            
+            /* No vi que esto funcionara, no detectaba la pantalla en web.
             if (!conv.screen) {
                 conv.ask('Para regresar al inicio Di: Inicio o si deseas más información Di: Contacto de Ventas');
             }else{
-                conv.ask('¿Te gustaría que te contactemos con alguien de ventas o prefieres regresar al menú principal?');
+                conv.ask('¿Te gustaría ponerte en contacto con alguien de ventas o tienes otra pregunta?');
             }
-            conv.ask(new Suggestions(["Ventas", "Ir al Inicio"]));
+            */
+            conv.ask('¿Te gustaría ponerte en contacto con alguien de ventas o tienes otra pregunta?');
+            conv.ask(new Suggestions(["Contacto", "Tengo otra pregunta"]));
             return ""
         }).catch((e) => {
             console.log('error:', e);
-            conv.close('Lo siento. Creo que no puedo responder esto. ¿Hay algo más en lo que te pueda ayudar?');
+            conv.close('Lo siento. Creo que no puedo responder a eso. ¿Hay algo más en lo que te pueda ayudar?');
             conv.ask(new Suggestions(ALL_CHIPS));
             return ""
         });
 
 });
 
+app.intent('Marcatel.simple.another_question', (conv) => {
+    conv.ask("Claro, con gusto resuelvo tu duda.");
+    conv.ask("¿Cómo puedo ayudarte?");
+    conv.ask(new Suggestions(ALL_CHIPS));
+});
 
+app.intent('Marcatel.simple.cancel', (conv) => {
+    conv.ask(SIMPLE_CANCEL.getRandomVal());
+    conv.ask(new Suggestions(ALL_CHIPS));
+});
+
+
+// SMALLTALK
+app.intent('Marcatel.smalltalk.gracias', (conv) => {
+    conv.ask(SMALLTALK_GRACIAS.getRandomVal());
+});
+
+app.intent('Marcatel.smalltalk.existential', (conv) => {
+    conv.ask('Soy un asistente virtual creado para ayudarte a resolver tus dudas. Intenta hacerme una pregunta.');
+});
+
+app.intent('Marcatel.smalltalk.adios', (conv) => {
+    conv.close(SMALLTALK_ADIOS.getRandomVal());
+});
 
 Array.prototype.getRandomVal = function () {
     return this[Math.floor(Math.random() * this.length)];

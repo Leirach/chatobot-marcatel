@@ -54,11 +54,30 @@ const FEATURES_SAMPLE = [
     "¿Dónde están ubicados?",//Para ubicación
     "¿A qué hora abren las oficinas?",//Para Horario
     "¿Qué es Marcatel?", //Para quienes somos
+    "¿Cómo puedo ponerme en contacto?" //para contacto
 ];
 
-const ALL_CHIPS = ["Servicios", "Ubicación","Horarios","Contacto","Quienes somos","¿Qué puedes hacer?"];
+const ALL_CHIPS = ["Servicios", "Ubicación", "Horarios", "Contacto", "Quienes somos", "¿Qué puedes hacer?"];
 const LOCATION_CHIPS = ["Monterrey", "CDMX","Guadalajara"];
 const SERVICE_CHIPS = ["Conectividad", "Telefonía","Cloud", "Servicios Administrados"];
+
+const SMALLTALK_ADIOS = [
+    "¡Hasta luego!",
+    "¡Nos vemos, fue un gusto atenderte!",
+    "¡Adios! Espero haber resuleto todas tus dudas.",
+]
+
+const SMALLTALK_GRACIAS = [
+    "¡De nada!",
+    "¡De nada, fue un gusto atenderte!",
+    "¡Estoy para ayudar!",
+    "¡De nada! Espero haber resuelto tus dudas."
+]
+
+const SIMPLE_CANCEL = [
+    "Ok. ¿Necesitas ayuda con algo más?",
+    "Entendido. ¿Necesitas ayuda con algo más?"
+]
 
 module.exports = {
     working_hours,
@@ -70,5 +89,8 @@ module.exports = {
     FEATURES_SAMPLE,
     ALL_CHIPS,
     LOCATION_CHIPS,
-    SERVICE_CHIPS
+    SERVICE_CHIPS,
+    SIMPLE_CANCEL,
+    SMALLTALK_ADIOS,
+    SMALLTALK_GRACIAS,
 };
