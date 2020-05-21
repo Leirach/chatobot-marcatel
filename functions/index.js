@@ -58,22 +58,19 @@ app.intent('Marcatel.simple.contact_Cliente', (conv) => {
 
 app.intent('Marcatel.simple.contact_Nombre', (conv) => {
     let nombre = conv.parameters.name
-    conv.ask(`Perfecto ${nombre}. Por favor, brindarnos un email donde podamos contactarte.`);
+    conv.ask(`Perfecto ${nombre}. Por favor, ingresa un email donde podamos contactarte.`);
 });
 
 app.intent('Marcatel.simple.contact_Email', (conv) => {
-    conv.ask("Por favor, bríndame tú número de telefono de 10 dígitos.");
+    conv.ask("Ahora, Ingresa tú número Whatsapp.");
 });
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
-    conv.ask("Finalmente. Brindame un mensaje que deseees agregar para hacerle llegar a nuestro equipo de soporte.");
-    if (!conv.screen) {
-        conv.ask('Puedes empezar a dictar en: 3, 2, 1, Ahora.');
-    }
+    conv.ask("Finalmente. Cuentanos un poco más sobre cómo podemos ayudarte.");
 });
 
 app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
-    conv.ask("Perfecto. Te hemos envíado un correo. Pronto te pondremos en contacto con un representante Marcatel.");
+    conv.ask("Perfecto. Te hemos envíado un correo electrónico. Un representante Marcatel se pondrá en contacto contigo lo más pronto posible.");
     conv.ask(
         new BasicCard({
             title: "Whatsapp Marcatel",
