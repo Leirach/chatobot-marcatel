@@ -68,8 +68,7 @@ app.intent('Marcatel.simple.contact_Email', (conv) => {
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
     conv.ask("Finalmente. Cuentanos un poco más sobre cómo podemos ayudarte.");
-
-}
+});
 
 app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
     conv.ask("Perfecto. Te hemos envíado un correo electrónico. Un representante Marcatel se pondrá en contacto contigo lo más pronto posible.");
