@@ -10,7 +10,7 @@ const functions = require('firebase-functions');
 const {dialogflow, Suggestions, BasicCard, Button, Image, SimpleResponse,
     BrowseCarousel, BrowseCarouselItem, RichResponse} = require('actions-on-google');
 const {locationCard} = require('./data/objects.js');
-const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE, 
+const {working_hours, address, serviceImg, FALLBACK_RESPONSE, FEATURES_SAMPLE,
     ALL_CHIPS, LOCATION_CHIPS, SERVICE_CHIPS, SMALLTALK_ADIOS, SMALLTALK_GRACIAS,
     SIMPLE_CANCEL} = require('./data/array.js');
 
@@ -32,7 +32,7 @@ app.intent('Default Welcome Intent', (conv) => {
 
 app.intent('Default Fallback Intent', (conv) => {
     conv.ask(FALLBACK_RESPONSE.getRandomVal());
-    conv.ask("Puedes intentar con las siguientes opciones por ejemplo:");
+    conv.ask(`Puedes hacer preguntas como: ${FEATURES_SAMPLE.getRandomVal()}, también puedo brindarte información sobre nuestros servicios y contactarte con un operador de ventas.`);
     conv.ask(new Suggestions(ALL_CHIPS));
 });
 
@@ -67,16 +67,8 @@ app.intent('Marcatel.simple.contact_Email', (conv) => {
 });
 
 app.intent('Marcatel.simple.contact_Numero', (conv) => {
-<<<<<<< HEAD
     conv.ask("Finalmente. Cuentanos un poco más sobre cómo podemos ayudarte.");
-=======
-    conv.ask("Finalmente. Brindame un mensaje que deseees agregar para hacerle llegar a nuestro equipo de soporte.");
-    /* Nel no jala
-    if (!conv.screen) {
-        conv.ask('Puedes empezar a dictar en: 3, 2, 1, Ahora.');
-    }*/
->>>>>>> 3320b155fd91b68f9c6b3236a4c66910e8d612d5
-});
+
 
 app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
     conv.ask("Perfecto. Te hemos envíado un correo electrónico. Un representante Marcatel se pondrá en contacto contigo lo más pronto posible.");
@@ -256,7 +248,7 @@ app.intent('Marcatel.dynamic.services_selection_[card]', async (conv, param, opt
                     })
                 })
             );
-            
+
             /* No vi que esto funcionara, no detectaba la pantalla en web.
             if (!conv.screen) {
                 conv.ask('Para regresar al inicio Di: Inicio o si deseas más información Di: Contacto de Ventas');
