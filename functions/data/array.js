@@ -26,7 +26,7 @@ const address_url = {
     "Ciudad de México": "https://goo.gl/maps/HBwK8uN26Nb9xrZq9",
 };
 
-/* 
+/*
 // IMAGENES ORIGINALES
 const serviceImg = {
     "ADMINISTRADOS": 'https://firebasestorage.googleapis.com/v0/b/marcatel-bot.appspot.com/o/services%2FADMINISTRADOS.png?alt=media&token=b468fc38-d47e-4f01-a21b-e4f7003c13ed',
@@ -57,7 +57,7 @@ const FEATURES_SAMPLE = [
     "¿Cómo puedo ponerme en contacto?" //para contacto
 ];
 
-const ALL_CHIPS = ["Servicios", "Ubicación", "Horarios", "Contacto", "Quienes somos", "¿Qué puedes hacer?"];
+const ALL_CHIPS = ["Servicios", "Ubicación", "Horarios", "Contacto", "Quienes somos", "¿Qué puedes hacer?", "Salir"];
 const LOCATION_CHIPS = ["Monterrey", "CDMX","Guadalajara"];
 const SERVICE_CHIPS = ["Conectividad", "Telefonía","Cloud", "Servicios Administrados"];
 

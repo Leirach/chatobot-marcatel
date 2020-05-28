@@ -63,14 +63,10 @@ app.intent('Marcatel.simple.contact_Nombre', (conv) => {
 });
 
 app.intent('Marcatel.simple.contact_Email', (conv) => {
-    conv.ask("Ahora, Ingresa tú número Whatsapp.");
-});
-
-app.intent('Marcatel.simple.contact_Numero', (conv) => {
     conv.ask("Finalmente. Cuentanos un poco más sobre cómo podemos ayudarte.");
 });
 
-app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
+app.intent('Marcatel.simple.contact_Message', (conv) => {
     conv.ask("Perfecto. Te hemos envíado un correo electrónico. Un representante Marcatel se pondrá en contacto contigo lo más pronto posible.");
     conv.ask(
         new BasicCard({
@@ -94,8 +90,8 @@ app.intent('Marcatel.simple.contact_Numero - Message', (conv) => {
     } catch (error) {
         console.error("Error with params in request:", error);
     }
-
 });
+
 
 
 app.intent('Marcatel.simple.location_followup', (conv) => {

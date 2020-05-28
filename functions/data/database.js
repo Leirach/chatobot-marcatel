@@ -15,13 +15,12 @@ function postUserIntoFirestore(userdata) {
     let docRef = db.collection('users').add({
         name : userdata.name,
         mail: userdata.email,
-        phone: userdata.phone_number,
         message: userdata.message
 
     }).then(ref => {
         console.log('Added document with ID: ', ref.id);
         sendMailtoCustomer(userdata.email)
-        sendMailToMarcatel("samuel-1998@live.com",userdata.message,userdata.email, userdata.phone_number, userdata.name)
+        sendMailToMarcatel("samuel-1998@live.com",userdata.message,userdata.email, userdata.name)
         return 1;
     }).catch((err)=>{
       console.err("Error agregando usuario:", err);
@@ -55,7 +54,7 @@ function sendMailtoCustomer( email){
     });
 }
 
-function sendMailToMarcatel( email ,message, usermail, usernumber, username ){
+function sendMailToMarcatel( email ,message, usermail, username ){
     var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',//Agregar correo no seguro
         port: 465,
@@ -79,9 +78,6 @@ function sendMailToMarcatel( email ,message, usermail, usernumber, username ){
                 <p style="font-size:medium">
                 Mensaje: ${message}<br>
                 </p>
-                </p>
-                <p style="font-size:medium">
-                Número: ${usernumber}<br>
                 </p>`
     };
     transporter.sendMail(userOptions, (err, info) => {
